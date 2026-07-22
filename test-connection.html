@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>MangaReadV1 - Prueba de conexión Supabase</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; background:#0f172a; color:#e2e8f0; }
+    h1 { font-size: 1.4rem; }
+    .test { padding: 14px 16px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #475569; background:#1e293b; }
+    .ok { border-left-color: #22c55e; }
+    .fail { border-left-color: #ef4444; }
+    .pending { border-left-color: #eab308; }
+    pre { white-space: pre-wrap; word-break: break-word; font-size: 0.85rem; color:#94a3b8; margin: 6px 0 0; }
+    button { background:#14b8a6; color:#0f172a; border:none; padding:10px 18px; border-radius:6px; font-weight:600; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Prueba de conexión - MangaReadV1</h1>
+  <p>Esto corre 4 pruebas contra tu proyecto de Supabase usando <code>js/config.js</code>. Ábrelo con Live Server (no como <code>file://</code>, porque Supabase Auth necesita http).</p>
+  <button onclick="runTests()">Ejecutar pruebas</button>
+  <div id="results"></div>
+
+  <script src="js/config.js"></script>
+  <script>
+    function addResult(name, status, detail) {
+      const div = document.createElement('div');
+      div.className = `test ${status}`;
+      const icon = status === 'ok' ? '✅' : status === 'fail' ? '❌' : '⏳';
+      div.innerHTML = `<strong>${icon} ${name}</strong><pre>${detail || ''}</pre>`;
+      document.getElementById('results').appendChild(div);
+    }
+
+    async function runTests() {
+      document.getElementById('results').innerHTML = '';
+
+      // Test 1: cliente creado
+      try {
+        if (!supabaseClient) throw new Error('supabaseClient no existe');
+        addResult('Cliente de Supabase inicializado', 'ok', `URL: ${SUPABASE_CONFIG.url}`);
+      } catch (e) {
+        addResult('Cliente de Supabase inicializado', 'fail', e.message);
+        return;
+      }
+
+      // Test 2: leer tabla mangas (RLS pública de lectura)
+      try {
+        const { data, error } = await supabaseClient.from('mangas').select('id, title').limit(5);
+        if (error) throw error;
+        addResult('Lectura de tabla "mangas"', 'ok', `${data.length} registro(s) encontrados.\n${JSON.stringify(data, null, 2)}`);
+      } catch (e) {
+        addResult('Lectura de tabla "mangas"', 'fail', e.message);
+      }
+
+      // Test 3: verificar buckets de storage
+      try {
+        const { data, error } = await supabaseClient.storage.listBuckets();
+        if (error) throw error;
+        const names = data.map(b => b.id);
+        const tieneAmbos = names.includes('covers') && names.includes('pdfs');
+        addResult('Buckets "covers" y "pdfs" existen', tieneAmbos ? 'ok' : 'fail', `Buckets encontrados: ${names.join(', ') || 'ninguno'}`);
+      } catch (e) {
+        addResult('Buckets "covers" y "pdfs" existen', 'fail', e.message);
+      }
+
+      // Test 4: sesión actual (debe ser null si no has iniciado sesión)
+      try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error) throw error;
+        const estado = data.session ? `Sesión activa: ${data.session.user.email}` : 'Sin sesión (normal si no has hecho login)';
+        addResult('Estado de autenticación', 'ok', estado);
+      } catch (e) {
+        addResult('Estado de autenticación', 'fail', e.message);
+      }
+    }
+  </script>
+</body>
+</html>

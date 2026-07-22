@@ -1,0 +1,92 @@
+/**
+ * js/ui.js
+ * Lógica de renderizado de UI.
+ * Recibe datos procesados y actualiza el DOM siguiendo el diseño definido.
+ */
+
+const UI = {
+    /**
+     * Renderiza la lista de mangas en el contenedor proporcionado.
+     * @param {HTMLElement} container 
+     * @param {Array} mangas 
+     */
+    renderMangaGrid(container, mangas) {
+        if (!container) return;
+        
+        if (mangas.length === 0) {
+            container.innerHTML = `<p class="text-on-surface col-span-3 text-center py-12">No se encontraron mangas.</p>`;
+            return;
+        }
+
+        container.innerHTML = mangas.map(manga => this.createMangaCardHTML(manga)).join('');
+    },
+
+    /**
+     * Crea el HTML de una tarjeta de manga según el sistema de diseño.
+     * @param {Object} manga 
+     * @returns {string}
+     */
+    createMangaCardHTML(manga) {
+        // Obtenemos géneros
+        const genero = manga.manga_genres && manga.manga_genres.length > 0 
+            ? "Género" // Placeholder para nombre de género real
+            : "Manga";
+
+        return `
+            <div class="manga-card relative aspect-[3/4.5] overflow-hidden rounded-lg surface_glass cursor-pointer group transition-all duration-300 hover:z-10 hover:scale-[1.03] hover:ring-2 ring-primary kinetic-border" 
+                 onclick="window.location.href='detalle.html?id=${manga.id}'">
+                <span class="hanko-stamp">${genero}</span>
+                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                     src="${MangaService.getFileUrl('covers', manga.cover_path)}" 
+                     alt="${manga.title}">
+                
+                <!-- Obi Band -->
+                <div class="absolute bottom-0 left-0 w-full bg-background/90 text-tertiary p-3 pt-6 font-label-bold text-[11px] uppercase tracking-wider text-center" 
+                     style="clip-path: polygon(0 25%, 100% 0, 100% 100%, 0% 100%);">
+                    ${genero} • ${manga.volumes?.length || 0} TOMOS
+                </div>
+
+                <div class="overlay absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex flex-col justify-end p-6 pb-16 translate-y-12 group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 class="text-headline-md text-white leading-none mb-1" style="font-family:'Yuji Syuku',serif;">${manga.title}</h3>
+                    <p class="text-primary text-label-bold text-xs mb-4">${manga.author}</p>
+                </div>
+            </div>
+        `;
+    },
+
+    /**
+     * Renderiza los chips de género en el sidebar.
+     * @param {HTMLElement} container 
+     * @param {Array} genres 
+     */
+    renderGenreFilters(container, genres) {
+        if (!container) return;
+
+        container.innerHTML = genres.map(genre => `
+            <a class="hanko-chip cursor-pointer" onclick="filterByGenre('${genre.id}')">
+                <span class="material-symbols-outlined text-sm">bolt</span>
+                ${genre.name}
+            </a>
+        `).join('');
+    },
+
+    /**
+     * Muestra un estado de carga.
+     * @param {HTMLElement} container 
+     */
+    showLoading(container) {
+        container.innerHTML = `<div class="col-span-3 text-center py-12 text-primary">Cargando...</div>`;
+    },
+
+    /**
+     * Muestra un mensaje de error.
+     * @param {HTMLElement} container 
+     * @param {string} message 
+     */
+    showError(container, message) {
+        container.innerHTML = `<div class="col-span-3 text-center py-12 text-secondary-container">${message}</div>`;
+    }
+};
+
+// Exponer globalmente
+window.UI = UI;

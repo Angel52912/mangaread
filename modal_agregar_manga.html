@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MangaReadV1 - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@700&family=Hanken+Grotesk:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=Space+Grotesk:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#5c4037",
+                    "error": "#ffb4ab",
+                    "surface-container": "#201f1f",
+                    "on-primary-fixed": "#0d1b30",
+                    "on-error-container": "#ffdad6",
+                    "primary": "#93b4e3",
+                    "surface-variant": "#353534",
+                    "on-primary": "#0d1b30",
+                    "on-surface": "#e5e2e1",
+                    "tertiary": "#e9c400",
+                    "secondary-container": "#e60000",
+                    "outline": "#ad897e",
+                    "on-surface-variant": "#e6beb2",
+                    "surface-dim": "#131313",
+                    "primary-fixed": "#c9d9f0",
+                    "surface-container-highest": "#353534",
+                    "on-tertiary-fixed-variant": "#544600",
+                    "inverse-primary": "#3d5a8a",
+                    "on-tertiary": "#3a3000",
+                    "primary-container": "#2b4570",
+                    "on-secondary-fixed-variant": "#930100",
+                    "tertiary-fixed-dim": "#e9c400",
+                    "background": "#131313",
+                    "on-secondary-container": "#fff6f5",
+                    "on-tertiary-container": "#4c3e00",
+                    "on-tertiary-fixed": "#221b00",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-fixed-dim": "#ffb4a8",
+                    "on-error": "#690005",
+                    "on-primary-container": "#dce6f5",
+                    "surface-container-high": "#2a2a2a",
+                    "primary-fixed-dim": "#93b4e3",
+                    "tertiary-fixed": "#ffe16d",
+                    "surface-tint": "#93b4e3",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-secondary": "#690000",
+                    "secondary-fixed": "#ffdad4",
+                    "on-secondary-fixed": "#410000",
+                    "tertiary-container": "#c9a900",
+                    "secondary": "#ffb4a8",
+                    "surface": "#131313",
+                    "inverse-on-surface": "#313030",
+                    "surface-bright": "#3a3939",
+                    "inverse-surface": "#e5e2e1",
+                    "on-background": "#e5e2e1",
+                    "error-container": "#93000a",
+                    "on-primary-fixed-variant": "#1e3252"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "asymmetric-offset": "48px",
+                    "margin-safe": "32px",
+                    "unit": "4px",
+                    "panel-gap": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Anton"],
+                    "headline-md": ["Anton"],
+                    "label-bold": ["Space Grotesk"],
+                    "headline-lg-mobile": ["Anton"],
+                    "body-md": ["Hanken Grotesk"],
+                    "display-hero": ["Anton"],
+                    "body-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["36px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "display-hero": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .surface_glass {
+            background: rgba(32, 31, 31, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #93b4e3;
+            border-radius: 0px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .manga-panel-mask {
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+        }
+        .modal-overlay {
+            background-color: rgba(14, 14, 14, 0.85);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-on-primary overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface/80 backdrop-blur-md border-b border-white/10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md text-primary uppercase tracking-tighter">MangaReadV1</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary pb-1 transition-all duration-200 active:translate-y-1" href="#">Dashboard</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors transition-all duration-200 active:translate-y-1" href="#">Analytics</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors transition-all duration-200 active:translate-y-1" href="#">Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
+<div class="h-8 w-8 rounded-full bg-surface-variant border border-primary/20 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up profile photo of a digital character with a futuristic anime aesthetic, vibrant orange accents on a dark metallic armor, high contrast lighting and sharp cel-shaded details, perfectly consistent with the MangaRead retro-brutalist dashboard style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDms6zbUCLtxAwtaK_a_fqgK6u6RpvM30okv5I_K1O9c0gkxXmN-3mq-pjHPCkF3fDVHU0eB1yL8tjSneiDzxAmndFL_GTS8GhAlB67bEZinRMlTN112NcEWbZa5w1nkBjoSO7EAySoysuWCADobrEGYorWzTz1YQWFUQ4MFzjXtfdnLTRhxFrkgjCZphCLiEaIh2k8W0iSYaZmFmt-WulcmeaKDDT6Qa52WmcGFRhqVOq5avJDBJTfAU55W_BgpY-ekk26BzBnsP4"/>
+</div>
+<button class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-error transition-colors">logout</button>
+</div>
+</header>
+<div class="flex h-screen pt-16">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen pt-8 pb-8 px-4 bg-surface-container w-64 border-r border-white/10 shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] fixed left-0">
+<div class="mb-10 px-4">
+<h2 class="font-headline-lg text-headline-lg text-primary leading-none">MangaReadV1</h2>
+<p class="font-label-bold text-label-bold text-on-surface-variant mt-1 opacity-60">Admin Control</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 text-on-surface-variant p-4 hover:bg-surface-variant hover:translate-x-1 transition-transform active:scale-95 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">library_books</span> Library
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant p-4 hover:bg-surface-variant hover:translate-x-1 transition-transform active:scale-95 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">auto_stories</span> Volumes
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant p-4 hover:bg-surface-variant hover:translate-x-1 transition-transform active:scale-95 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">group</span> Users
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant p-4 hover:bg-surface-variant hover:translate-x-1 transition-transform active:scale-95 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+                </a>
+</nav>
+<div class="mt-auto px-4">
+<button class="w-full bg-primary-container text-on-primary-container font-headline-md text-[20px] py-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all uppercase tracking-tight">
+                    Add New Manga
+                </button>
+</div>
+</aside>
+<!-- Main Content (Dashboard Background) -->
+<main class="flex-1 md:ml-64 p-gutter custom-scrollbar overflow-y-auto">
+<div class="flex flex-col gap-8 max-w-7xl mx-auto opacity-40 grayscale pointer-events-none">
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-panel-gap">
+<div class="surface_glass p-6 border-l-4 border-primary">
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase">Total Manga</p>
+<h3 class="font-headline-lg text-headline-lg text-primary">1,284</h3>
+</div>
+<div class="surface_glass p-6 border-l-4 border-tertiary">
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase">Active Users</p>
+<h3 class="font-headline-lg text-headline-lg text-tertiary">42.1k</h3>
+</div>
+<div class="surface_glass p-6 border-l-4 border-secondary-container">
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase">Storage Used</p>
+<h3 class="font-headline-lg text-headline-lg text-secondary-container">84%</h3>
+</div>
+</div>
+<!-- Bento Content Grid -->
+<div class="grid grid-cols-12 gap-panel-gap h-[600px]">
+<div class="col-span-8 surface_glass p-8 flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md text-on-surface uppercase">Recent Uploads</h2>
+<div class="grid grid-cols-4 gap-4 flex-1">
+<div class="bg-surface-container-high aspect-[3/4] relative overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="Dramatic shonen manga cover art featuring a lone warrior standing against a blood-red sky, intense cinematic lighting with deep blacks and vibrant orange highlights, gritty texture and dynamic panel lines, professional digital art style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYXa4qXBRCiMfejwLIrMdbMPgY92NK1khxh90hL7qjRPgqCengLZpphgW6uMu9xAURlk-JCikc-BELJ31PaBl0mAdEOO5f7ytr_psvYJCl2AlYdPv-D-ha9NUw3i3ComzBcOrfcTqo-1UsrKWHX9g1LPSm9hTlOHW6HP4eIAJANoT7LkjAarNFrOHlMGq_csAPsWs7EAFryZ9h2YUREoD-slRSdZKCyesEcgWEtFNxoo_JguCPcGiBd8XRjgRZIHVu1LPbY0lYwKM"/>
+</div>
+<div class="bg-surface-container-high aspect-[3/4] relative overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="High-energy manga cover illustration with multiple characters in motion, explosive special effects in bright yellow and neon red, sharp cel-shading and aggressive perspective, retro-brutalist anime aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhEZhkjPatW75TBrO9lcidtTzkgFstAca0KlKL-FamEn2NP6bNMoa9Nbg6FPnGDZnp-8qXTmOP3sZnWsxiwSTYXoZ6Eq4WsYfX4nquVKnDdMRVoyohufaiW7kp4-QoKBKgKVsjrcP5zaTGLP-ycOOHASzSxcbtpQBlOH1G7FAOXh3YnxtXBE2cAvg3inH8LS9cabwLKaYZNqdW7UC6NWyNjq_8p3NZ5EpDDrWtsgs5pS7N_moeVgPvNYp32DiKYL6_bVmUQJjKsB0"/>
+</div>
+<div class="bg-surface-container-high aspect-[3/4] relative overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="Dark fantasy manga cover art, featuring intricate line work of a gothic castle under a shattered moon, monochromatic grey scale with strategic crimson accents, brooding atmosphere and heavy ink style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZXWWSbtdS0cmn2CMLz595rvR6rCRjcPfp7a6JVHbCw8D0orMjBb5iugK4uRZBvfJjPaFq4gujGNP-lIDpbZq4pHp7lK00ASsO4rcAlcd5cZSU--KoHvYuLax-8Luad7FIprLgeXAhj2wqkz0yHBV4w5krq2B-8yRCHQaC3t9F4OUpyucNLANw79XUIjHgNBXrQVxsvsFWfZdRhmEDTdb4ErUGJpoArhzU8qhVOxdp9l2Lmusx1x7bAnVdJVw4lKD1U71QhqKNkCE"/>
+</div>
+<div class="bg-surface-container-high aspect-[3/4] relative overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="Cyberpunk manga aesthetic cover, featuring a female protagonist with mechanical limbs, glowing teal and hot pink highlights on dark carbon fiber armor, futuristic cityscape background, sharp and clean digital illustration." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_g_rttFPrv-FQ4T0KhPWlwyD-c6zeJ8iJyPFMESZVijUlkteXX7u9_d4ggfK8iz91zsKwrB31SMhbzblluZtzqarhad6FxSf0XjOpmidu1070edyFgw3cZU4MDl7ZGozfZnHCw0IdvOKGFQJpSmH_9fh9N92Mkq7wwP3GemEK9Xj5mDZK-LRt7JF58nSu0em58vgIFeve5BJhxoFl47gcdbEHfrasl6XBkwKoc5Os-tr8d7GVHnfDZ9bhl282kHLgr0wH7yHuO68"/>
+</div>
+</div>
+</div>
+<div class="col-span-4 surface_glass p-8 flex flex-col">
+<h2 class="font-headline-md text-headline-md text-on-surface uppercase mb-6">System Logs</h2>
+<div class="flex-1 flex flex-col gap-4 font-body-md text-body-md text-on-surface-variant">
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span>DB Optimized</span>
+<span class="text-tertiary">2m ago</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span>CDN Cache Purged</span>
+<span class="text-tertiary">15m ago</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span>User "Kaito" Banned</span>
+<span class="text-secondary-container">1h ago</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span>New Chapter: JJK 256</span>
+<span class="text-primary">4h ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-4">
+<!-- Modal Content -->
+<div class="w-full max-w-2xl surface_glass bg-surface-container-low shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] border-2 border-primary/30 relative overflow-hidden animate-in fade-in zoom-in duration-300">
+<!-- Diagonal Accent -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 -mr-16 -mt-16 rotate-45 pointer-events-none"></div>
+<!-- Modal Header -->
+<div class="p-8 border-b border-white/10 relative">
+<h2 class="font-headline-md text-headline-md text-primary uppercase tracking-tighter">Agregar Manga</h2>
+<div class="absolute bottom-0 left-0 h-[2px] bg-primary w-24"></div>
+</div>
+<!-- Form Content -->
+<div class="p-8 custom-scrollbar max-h-[716px] overflow-y-auto">
+<form id="mangaForm" class="flex flex-col gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Título -->
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Título del Manga</label>
+<input id="mangaTitle" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors" placeholder="Ej: Chainsaw Man" type="text" required/>
+</div>
+<!-- Autor -->
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Autor</label>
+<input id="mangaAuthor" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors" placeholder="Ej: Tatsuki Fujimoto" type="text" required/>
+</div>
+</div>
+<!-- Sinopsis -->
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Sinopsis</label>
+<textarea id="mangaSynopsis" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors resize-none custom-scrollbar" placeholder="Escribe un breve resumen de la historia..." rows="4" required></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Sentido de Lectura -->
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Sentido de Lectura</label>
+<div class="relative">
+<select id="mangaDirection" class="w-full bg-surface-container-high border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface appearance-none cursor-pointer">
+<option value="rtl">Derecha a Izquierda - RTL</option>
+<option value="ltr">Izquierda a Derecha - LTR</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Subir Portada -->
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Subir Portada</label>
+<div class="flex flex-col gap-1">
+<div class="relative group">
+<input class="hidden" id="cover-upload" type="file" accept="image/*" required/>
+<label class="flex items-center gap-3 bg-surface-container-high border-2 border-dashed border-primary/40 p-3 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all" for="cover-upload">
+<span class="material-symbols-outlined text-primary">upload_file</span>
+<span id="coverName" class="font-body-md text-on-surface-variant">Seleccionar archivo...</span>
+</label>
+</div>
+<span class="text-[11px] font-label-bold text-on-surface-variant/60 uppercase">Solo imágenes JPG/PNG</span>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Modal Footer -->
+<div class="p-8 bg-surface-container-low border-t border-white/10 flex justify-end gap-4">
+<button class="px-8 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase border border-white/20 hover:bg-white/5 hover:text-on-surface transition-all active:scale-95">
+                    Cancelar
+                </button>
+<button id="saveMangaBtn" class="px-8 py-3 font-headline-md text-[18px] bg-primary-container text-on-primary-container uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all">
+                    Guardar Manga
+                </button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="fixed bottom-0 w-full py-6 px-gutter flex justify-between items-center mt-auto bg-surface-container-lowest border-t border-white/5 z-40">
+<span class="font-body-md text-body-md text-on-surface-variant">© 2024 MangaReadV1 - Kinetic Admin Terminal</span>
+<div class="flex gap-8">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Documentation</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Support</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Terms</a>
+</div>
+</footer>
+<!-- Dependencias y Módulos -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/manga-service.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+        // Micro-interactions for inputs
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label').style.color = '#93b4e3';
+                input.parentElement.querySelector('label').style.letterSpacing = '0.2em';
+                input.parentElement.querySelector('label').style.transition = 'all 0.3s ease';
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label').style.color = '';
+                input.parentElement.querySelector('label').style.letterSpacing = '';
+            });
+        });
+    </script>
+</body></html>
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // In a real app, this would trigger close logic
+                console.log('Close modal requested');
+            }
+        });
+    </script>
+</body></html>

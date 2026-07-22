@@ -1,0 +1,258 @@
+<!DOCTYPE html><html class="dark" lang="es" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&amp;family=Anton&amp;family=Hanken+Grotesk:wght@400;700&amp;family=Space+Grotesk:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "on-tertiary-container": "#4c3e00",
+                "on-secondary-fixed": "#410000",
+                "on-secondary-container": "#fff6f5",
+                "tertiary-container": "#c9a900",
+                "surface": "#131313",
+                "primary-fixed-dim": "#93b4e3",
+                "tertiary": "#e9c400",
+                "on-background": "#e5e2e1",
+                "on-primary-container": "#dce6f5",
+                "tertiary-fixed-dim": "#e9c400",
+                "tertiary-fixed": "#ffe16d",
+                "surface-container-highest": "#353534",
+                "on-tertiary-fixed": "#221b00",
+                "error-container": "#93000a",
+                "on-surface-variant": "#e6beb2",
+                "on-secondary": "#690000",
+                "secondary-fixed": "#ffdad4",
+                "on-error": "#690005",
+                "surface-dim": "#131313",
+                "on-tertiary": "#3a3000",
+                "error": "#ffb4ab",
+                "surface-bright": "#3a3939",
+                "outline-variant": "#5c4037",
+                "surface-container-low": "#1c1b1b",
+                "on-primary": "#0d1b30",
+                "secondary-container": "#e60000",
+                "on-tertiary-fixed-variant": "#544600",
+                "surface-container-high": "#2a2a2a",
+                "on-secondary-fixed-variant": "#930100",
+                "primary-fixed": "#c9d9f0",
+                "primary": "#93b4e3",
+                "inverse-surface": "#e5e2e1",
+                "background": "#131313",
+                "surface-container-lowest": "#0e0e0e",
+                "secondary": "#ffb4a8",
+                "inverse-on-surface": "#313030",
+                "secondary-fixed-dim": "#ffb4a8",
+                "on-error-container": "#ffdad6",
+                "surface-tint": "#93b4e3",
+                "inverse-primary": "#3d5a8a",
+                "primary-container": "#2b4570",
+                "on-primary-fixed-variant": "#1e3252",
+                "on-surface": "#e5e2e1",
+                "on-primary-fixed": "#0d1b30",
+                "surface-variant": "#353534",
+                "surface-container": "#201f1f",
+                "outline": "#ad897e"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "asymmetric-offset": "48px",
+                "unit": "4px",
+                "margin-safe": "32px",
+                "panel-gap": "16px",
+                "gutter": "24px"
+              },
+              "fontFamily": {
+                "headline-lg": ["Anton"],
+                "body-lg": ["Hanken Grotesk"],
+                "headline-lg-mobile": ["Anton"],
+                "display-hero": ["Anton"],
+                "label-bold": ["Space Grotesk"],
+                "headline-md": ["Anton"],
+                "body-md": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "headline-lg-mobile": ["36px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                "display-hero": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="font-body-md text-body-md h-screen flex flex-col retro-grid bg-surface text-on-surface">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky bg-surface/80 backdrop-blur-md z-50 border-b border-white/10 flex justify-between items-center px-gutter py-4 bg-surface">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary tracking-tighter uppercase">MangaReadV1</span>
+<div class="h-6 w-px bg-white/10 mx-2"></div>
+<div class="flex flex-col">
+<span class="font-label-bold text-label-bold text-primary uppercase tracking-widest">CHAINSAW MAN</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Capítulo 1: El Perro y la Motosierra</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">
+
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<main class="flex-grow flex overflow-hidden">
+<!-- LEFT COLUMN: Sidebar (20%) -->
+<aside class="w-1/5 h-full glass-panel border-r border-white/10 flex flex-col p-panel-gap z-40 bg-surface-container-low">
+<button class="mb-8 flex items-center justify-center gap-2 w-full py-3 bg-surface-container hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-bold text-label-bold uppercase border border-primary/20 rounded-lg group bg-surface-container-high">
+<span class="material-symbols-outlined text-sm group-hover:translate-x-[-2px] transition-transform">arrow_back</span>
+                Volver al Detalle
+            </button>
+<div class="flex-grow overflow-y-auto custom-scrollbar space-y-8 pr-2">
+<!-- Tomos Section -->
+<div>
+<h3 class="font-label-bold text-label-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">auto_stories</span>
+                        Tomos Disponibles
+                    </h3>
+<ul class="space-y-2">
+<li class="p-3 bg-primary text-on-primary rounded-lg font-label-bold cursor-pointer transition-all flex justify-between items-center">
+<span class="">Tomo 1</span>
+<span class="text-[10px] opacity-70">LECTURA</span>
+</li>
+<li class="p-3 text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg cursor-pointer">Tomo 2</li>
+<li class="p-3 text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg cursor-pointer">Tomo 3</li>
+</ul>
+</div>
+<!-- Capítulos Section -->
+<div>
+<h3 class="font-label-bold text-label-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">format_list_numbered</span>
+                        Capítulos
+                    </h3>
+<ul class="space-y-1">
+<li class="p-2 text-sm text-primary font-bold border-l-2 border-primary pl-3 bg-primary/5">Capítulo 1: El Perro y la Motosierra</li>
+<li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer">Capítulo 2: La llegada a la ciudad</li>
+<li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer">Capítulo 3: Prueba de reclutamiento</li>
+<li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer">Capítulo 4: El poder de Power</li>
+<li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer">Capítulo 5: El diablo de los tomates</li>
+</ul>
+</div>
+</div>
+<!-- History Link at bottom of sidebar -->
+<div class="pt-4 mt-4 border-t border-white/5">
+<button class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-colors text-sm font-label-bold">
+<span class="material-symbols-outlined">history</span>
+                    ÚLTIMAS LECTURAS
+                </button>
+</div>
+</aside>
+<!-- CENTER COLUMN: Reading Area (65%) -->
+<section class="w-[65%] h-full flex items-center justify-center p-gutter relative bg-surface-dim"><div class="flex flex-col items-center gap-6 w-full max-w-5xl">
+<div id="book" class="w-full aspect-[3/2] page-flip-container relative bg-surface-container-highest shadow-2xl rounded-sm overflow-hidden group" style="transform: rotateY(-12.18deg) rotateX(8.94deg); max-width: 120%; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+<div class="absolute inset-0 border-[12px] border-surface-container-low pointer-events-none z-30"></div>
+<div class="absolute inset-0 flex">
+<div class="w-1/2 h-full bg-white relative overflow-hidden flex items-center justify-center border-r border-surface-container-low/20"></div>
+<div class="w-1/2 h-full bg-white relative overflow-hidden flex items-center justify-center"></div>
+</div>
+<div class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-24 page-shadow z-20 pointer-events-none"></div>
+<div class="absolute inset-0 pointer-events-none opacity-20 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+</div>
+<div class="flex items-center gap-8">
+<button class="p-3 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-full transition-all active:scale-95 border border-white/5 px-8">
+<span class="material-symbols-outlined text-3xl">chevron_left</span>
+</button>
+
+<button class="p-3 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-full transition-all active:scale-95 border border-white/5 px-8">
+<span class="material-symbols-outlined text-3xl">chevron_right</span>
+</button>
+</div>
+</div></section>
+<!-- RIGHT COLUMN: Decorative (15%) -->
+<aside class="w-[15%] h-full relative flex flex-col justify-end p-margin-safe overflow-hidden bg-surface-dim"><div class="absolute inset-0 z-0 opacity-20 grayscale hover:grayscale-0 transition-all duration-500">
+<img alt="Manga Collage Background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMFOqNUIe_h7ZZCqyDfTvQJjyqp0B5YxOGd6_TTC-I8TFfH5TMLwdE1QTTU-6cwzO1TNiH0O3LBwavJ6hc--w-wLX8ZkNcIbGUwoLJOo2lt6op2cGin_zn_NgsZYfnVfgJLxwo3So7G4dGmeUeCr97uae_5TOUQWlS0iw1Y8qioqZ0QCs359KTJqvsiC-3foojV0VcYL-o39JzxQZy9RNtQ_j0hnWr7XHRW7NqqCwevhmTS72jDjCLAXpg_4OO1wayv99tsZoJvE0">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60 z-10"></div>
+<div class="relative z-20 flex flex-col h-full justify-end">
+<div class="absolute top-1/2 right-4 -translate-y-1/2 pointer-events-none">
+<p class="rotate-90 text-primary opacity-10 font-headline-lg uppercase whitespace-nowrap tracking-widest text-8xl">SHONEN VAULT</p>
+</div>
+</div></aside>
+</main>
+<!-- Bottom Navigation Bar -->
+<footer class="w-full bottom-0 fixed bg-surface-container-lowest z-40 border-t-2 border-primary shadow-[0_-4px_10px_rgba(0,0,0,0.5)] flex justify-between items-center px-margin-safe py-3">
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 bg-surface-container border border-white/10 hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-bold uppercase text-xs flex items-center gap-2 group">
+<span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">chevron_left</span>
+                Anterior
+            </button>
+<button class="px-6 py-2 bg-surface-container border border-white/10 hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-bold uppercase text-xs flex items-center gap-2 group">
+                Siguiente
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-bold text-on-surface-variant uppercase text-[10px]">Página</span>
+<div class="relative flex items-center">
+<input class="w-16 bg-surface-container border-0 border-b-2 border-primary text-center font-label-bold text-primary focus:ring-0 text-lg py-1" type="text" value="12">
+</div>
+<span class="font-label-bold text-on-surface-variant uppercase text-[10px]">de 150</span>
+</div>
+<div class="flex items-center gap-2">
+
+<div class="w-px h-4 bg-white/10 mx-1"></div>
+
+</div>
+</footer>
+<!-- Dependencias y Módulos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/st.pageflip/2.0.3/js/page-flip.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/manga-service.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/reader.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Micro-interaction for page container
+        const readerContainer = document.querySelector('.page-flip-container');
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+            if(readerContainer) readerContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+    </script>
+</body></html>
+
+        // Simple zoom toggle simulation
+        let isZoomed = false;
+        const zoomBtn = document.querySelector('[title="Reading Mode"]');
+        zoomBtn.addEventListener('click', () => {
+            isZoomed = !isZoomed;
+            const book = document.querySelector('.page-flip-container');
+            if (isZoomed) {
+                book.style.maxWidth = '120%';
+                book.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                zoomBtn.classList.add('text-primary');
+            } else {
+                book.style.maxWidth = '1024px';
+                zoomBtn.classList.remove('text-primary');
+            }
+        });
+    </script>
+
+
+
+
+</body></html>

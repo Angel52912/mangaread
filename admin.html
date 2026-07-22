@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="es" class="dark" style=""><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:wght@400;700&amp;family=Space+Grotesk:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#c9a900",
+                    "primary-fixed-dim": "#93b4e3",
+                    "error-container": "#93000a",
+                    "on-error": "#690005",
+                    "on-background": "#e5e2e1",
+                    "on-secondary-fixed-variant": "#930100",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#e60000",
+                    "inverse-surface": "#e5e2e1",
+                    "primary-container": "#2b4570",
+                    "surface-dim": "#131313",
+                    "secondary-fixed-dim": "#ffb4a8",
+                    "tertiary-fixed": "#ffe16d",
+                    "surface-container-low": "#1c1b1b",
+                    "on-tertiary-container": "#4c3e00",
+                    "on-primary": "#0d1b30",
+                    "inverse-on-surface": "#313030",
+                    "on-tertiary-fixed": "#221b00",
+                    "on-surface-variant": "#e6beb2",
+                    "on-primary-fixed-variant": "#1e3252",
+                    "on-secondary-fixed": "#410000",
+                    "secondary-fixed": "#ffdad4",
+                    "on-secondary": "#690000",
+                    "on-primary-fixed": "#0d1b30",
+                    "on-tertiary-fixed-variant": "#544600",
+                    "surface-container-highest": "#353534",
+                    "surface": "#131313",
+                    "on-secondary-container": "#fff6f5",
+                    "surface-bright": "#3a3939",
+                    "outline-variant": "#5c4037",
+                    "background": "#131313",
+                    "surface-variant": "#353534",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container": "#201f1f",
+                    "error": "#ffb4ab",
+                    "on-tertiary": "#3a3000",
+                    "inverse-primary": "#3d5a8a",
+                    "secondary": "#ffb4a8",
+                    "on-primary-container": "#dce6f5",
+                    "tertiary": "#e9c400",
+                    "surface-tint": "#93b4e3",
+                    "tertiary-fixed-dim": "#e9c400",
+                    "surface-container-lowest": "#0e0e0e",
+                    "primary-fixed": "#c9d9f0",
+                    "outline": "#ad897e",
+                    "primary": "#93b4e3",
+                    "on-surface": "#e5e2e1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "panel-gap": "16px",
+                    "margin-safe": "32px",
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "asymmetric-offset": "48px"
+            },
+            "fontFamily": {
+                    "display-hero": ["Anton"],
+                    "headline-lg": ["Anton"],
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Anton"],
+                    "label-bold": ["Space Grotesk"],
+                    "headline-md": ["Anton"],
+                    "body-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "display-hero": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["36px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="min-h-screen flex flex-col items-center bg-surface">
+<!-- Background Layers -->
+
+
+<!-- TopNavBar Cluster -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface/80 backdrop-blur-md border-b border-white/10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="font-headline-md text-headline-md text-primary uppercase tracking-tighter">
+            MangaReadV1
+        </div>
+<div class="hidden md:flex gap-8 items-center">
+<a href="#" class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md">Dashboard</a>
+
+
+</div>
+<button class="bg-secondary-container text-on-secondary-container px-4 py-2 font-label-bold text-label-bold flex items-center gap-2 kinetic-border hover:bg-error transition-all active:translate-y-1">
+<span class="material-symbols-outlined text-sm">logout</span>
+            Cerrar Sesión
+        </button>
+</nav>
+<!-- SideNavBar (Hidden on Mobile) -->
+<aside class="hidden md:flex flex-col h-screen pt-24 pb-8 px-4 w-64 fixed left-0 top-0 border-r border-white/10 bg-surface-container shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] z-40">
+<div class="mb-10 px-4">
+<h2 class="font-headline-lg text-headline-lg text-primary leading-tight">ADMIN</h2>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Control Terminal</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a href="#" class="flex items-center gap-3 bg-primary text-on-primary p-4 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-label-bold text-label-bold">
+<span class="material-symbols-outlined">library_books</span>
+                Library
+            </a>
+
+
+<a href="#" class="flex items-center gap-3 text-on-surface-variant p-4 hover:bg-surface-variant transition-transform hover:translate-x-1 font-label-bold text-label-bold">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto px-4">
+
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[1200px] mt-24 mb-16 px-4 md:pl-72 md:pr-gutter z-10">
+<!-- Header Section -->
+<header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface leading-none mb-2">Panel de Administración</h1>
+<div class="h-1 w-24 bg-primary"></div>
+</div>
+<div class="flex gap-4">
+
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Manga Management Column (Left) -->
+<section class="lg:col-span-7 space-y-6">
+<div class="surface-glass p-6 kinetic-border">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline-md text-headline-md flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">menu_book</span>
+                            CATÁLOGO
+                        </h3>
+<button class="shonen-btn bg-[#2ecc71] text-black px-6 py-2 kinetic-border hover:bg-[#27ae60] flex items-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                            + Agregar Nuevo Manga
+                        </button>
+</div>
+<div class="overflow-x-auto scrollbar-custom">
+<table class="w-full border-collapse">
+<thead>
+<tr class="border-b-2 border-primary/20 text-left">
+<th class="pb-4 font-label-bold text-label-bold text-primary px-2">COVER</th>
+<th class="pb-4 font-label-bold text-label-bold text-primary px-2">TÍTULO</th>
+<th class="pb-4 font-label-bold text-label-bold text-primary px-2">AUTOR</th>
+<th class="pb-4 font-label-bold text-label-bold text-primary px-2 text-right">ACCIONES</th>
+</tr>
+</thead>
+<tbody id="mangaTableBody" class="font-body-md text-body-md">
+    <!-- Rows will be populated here -->
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Volumes Section (Right) -->
+<section class="lg:col-span-5 space-y-6">
+<div class="surface-glass p-6 kinetic-border border-t-4 border-t-tertiary">
+<div class="flex flex-col gap-4 mb-8">
+<div class="flex items-center gap-2">
+
+<h3 class="font-headline-md text-headline-md">Tomos de: Chainsaw Man</h3>
+</div>
+<button class="shonen-btn bg-primary text-on-primary px-6 py-3 kinetic-border hover:bg-secondary-container hover:text-white flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">library_add</span>
+                            + Agregar Nuevo Tomo
+                        </button>
+</div>
+<div class="space-y-4 max-h-[500px] overflow-y-auto pr-2 scrollbar-custom">
+<!-- Volume Item -->
+<div class="bg-surface-container p-4 kinetic-border border border-white/5 flex items-center justify-between group hover:border-tertiary transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-tertiary/10 p-3">
+<span class="material-symbols-outlined text-tertiary">description</span>
+</div>
+<div>
+<h4 class="font-label-bold text-label-bold">Tomo 1</h4>
+<p class="text-xs text-on-surface-variant">chainsaw_man_vol1_hd.pdf</p>
+</div>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-surface-bright p-2 kinetic-border hover:bg-tertiary hover:text-on-tertiary transition-all">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+<button class="bg-surface-bright p-2 kinetic-border hover:bg-error hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+<!-- Volume Item -->
+<div class="bg-surface-container p-4 kinetic-border border border-white/5 flex items-center justify-between group hover:border-tertiary transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-tertiary/10 p-3">
+<span class="material-symbols-outlined text-tertiary">description</span>
+</div>
+<div>
+<h4 class="font-label-bold text-label-bold">Tomo 2</h4>
+<p class="text-xs text-on-surface-variant">chainsaw_man_vol2_hd.pdf</p>
+</div>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-surface-bright p-2 kinetic-border hover:bg-tertiary hover:text-on-tertiary transition-all">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+<button class="bg-surface-bright p-2 kinetic-border hover:bg-error hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+<!-- Volume Item -->
+<div class="bg-surface-container p-4 kinetic-border border border-white/5 flex items-center justify-between group hover:border-tertiary transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-tertiary/10 p-3">
+<span class="material-symbols-outlined text-tertiary">description</span>
+</div>
+<div>
+<h4 class="font-label-bold text-label-bold">Tomo 3</h4>
+<p class="text-xs text-on-surface-variant">chainsaw_man_vol3_v2.pdf</p>
+</div>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-surface-bright p-2 kinetic-border hover:bg-tertiary hover:text-on-tertiary transition-all">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+<button class="bg-surface-bright p-2 kinetic-border hover:bg-error hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats/System Health Panel -->
+
+</section>
+</div>
+</main>
+<!-- Footer -->
+
+<!-- Interactive Layer for cursor/hover feedback -->
+<div class="pointer-events-none fixed top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl transition-opacity opacity-0 z-0" id="glow-element"></div>
+<!-- Dependencias y Módulos -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/manga-service.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+        // Micro-interaction for cursor glow
+        const glow = document.getElementById('glow-element');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.opacity = '1';
+            glow.style.left = `${e.clientX - 128}px`;
+            glow.style.top = `${e.clientY - 128}px`;
+        });
+        document.addEventListener('mouseleave', () => {
+            glow.style.opacity = '0';
+        });
+
+        // Simple row selection highlighting
+        const tableRows = document.querySelectorAll('tbody tr');
+        tableRows.forEach(row => {
+            row.addEventListener('click', () => {
+                tableRows.forEach(r => r.classList.remove('bg-primary/10', 'border-l-4', 'border-l-primary'));
+                row.classList.add('bg-primary/10', 'border-l-4', 'border-l-primary');
+            });
+        });
+    </script>
+</body></html>
