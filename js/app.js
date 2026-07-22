@@ -253,6 +253,24 @@ const App = {
      */
     async initAdminDashboard() {
         const tableBody = document.getElementById('mangaTableBody');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const addMangaBtn = document.getElementById('addMangaBtn');
+
+        // Logout
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+                await window.auth.signOut();
+                window.location.href = 'admin_login_1.html';
+            });
+        }
+
+        // Abrir Modal
+        if (addMangaBtn) {
+            addMangaBtn.addEventListener('click', () => {
+                window.open('modal_agregar_manga.html', '_blank', 'width=800,height=600');
+            });
+        }
+
         if (!tableBody) return;
 
         const loadMangas = async () => {
