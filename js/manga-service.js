@@ -16,7 +16,7 @@ const MangaService = {
     async getMangas() {
         const { data, error } = await supabaseClient
             .from('mangas')
-            .select('*, manga_genres(genre_id)')
+            .select('*, manga_genres(genre_id, genres(name, slug))')
             .order('created_at', { ascending: false });
 
         if (error) throw error;
@@ -55,15 +55,15 @@ const MangaService = {
         const { data, error } = await supabaseClient
             .from('mangas')
             .insert(payload)
-            .select()
-            .single();
+            .select();
 
         if (error) throw error;
+        const manga = data[0];
 
         // Insertar géneros si existen
         if (genreIds.length > 0) {
             const genresPayload = genreIds.map(genreId => ({
-                manga_id: data.id,
+                manga_id: manga.id,
                 genre_id: genreId
             }));
             const { error: gError } = await supabaseClient
@@ -72,7 +72,7 @@ const MangaService = {
             if (gError) throw gError;
         }
 
-        return data;
+        return manga;
     },
 
     /**
@@ -92,10 +92,10 @@ const MangaService = {
             .from('mangas')
             .update(payload)
             .eq('id', id)
-            .select()
-            .single();
+            .select();
 
         if (error) throw error;
+        const manga = data[0];
 
         // Actualizar géneros (borrar y re-insertar)
         if (genreIds.length > 0) {
@@ -110,7 +110,7 @@ const MangaService = {
             if (gError) throw gError;
         }
 
-        return data;
+        return manga;
     },
 
     /**
@@ -141,8 +141,19 @@ const MangaService = {
      * @returns {Promise<Array>}
      */
     async searchMangas(query) {
-        const { data, error } = await supabaseClient
+        const { data: searchResults, error: rpcError } = await supabaseClient
             .rpc('search_mangas', { query });
+        if (rpcError) throw rpcError;
+        
+        if (!searchResults || searchResults.length === 0) return [];
+        
+        const ids = searchResults.map(m => m.id);
+        
+        // Fetch full details with genres
+        const { data, error } = await supabaseClient
+            .from('mangas')
+            .select('*, manga_genres(genres(name, slug))')
+            .in('id', ids);
         if (error) throw error;
         return data;
     },
@@ -182,14 +193,14 @@ const MangaService = {
         const { data, error } = await supabaseClient
             .from('volumes')
             .insert(payload)
-            .select()
-            .single();
+            .select();
 
         if (error) throw error;
+        const volume = data[0];
 
         if (chapterMarks.length > 0) {
             const marksPayload = chapterMarks.map(mark => ({
-                volume_id: data.id,
+                volume_id: volume.id,
                 chapter: mark.chapter,
                 page: mark.page
             }));
@@ -199,7 +210,7 @@ const MangaService = {
             if (mError) throw mError;
         }
 
-        return data;
+        return volume;
     },
 
     async updateVolume(id, volumeData, chapterMarks = []) {

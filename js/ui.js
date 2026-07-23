@@ -29,13 +29,17 @@ const UI = {
     createMangaCardHTML(manga) {
         // Obtenemos géneros
         const generos = manga.manga_genres && manga.manga_genres.length > 0 
-            ? manga.manga_genres.map(g => g.genre_id).join(', ') // placeholder simple
+            ? manga.manga_genres.map(g => g.genres.name).join(', ')
+            : "Manga";
+
+        const primaryGenre = manga.manga_genres && manga.manga_genres.length > 0 
+            ? manga.manga_genres[0].genres.name
             : "Manga";
 
         return `
             <div class="manga-card relative aspect-[3/4.5] overflow-hidden rounded-lg surface_glass cursor-pointer group transition-all duration-300 hover:z-10 hover:scale-[1.03] hover:ring-2 ring-primary kinetic-border" 
                  onclick="window.location.href='detalle.html?id=${manga.id}'">
-                <span class="hanko-stamp">${generos.split(',')[0]}</span>
+                <span class="hanko-stamp">${primaryGenre}</span>
                 <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                      src="${MangaService.getFileUrl('covers', manga.cover_path)}" 
                      alt="${manga.title}">
@@ -43,7 +47,7 @@ const UI = {
                 <!-- Obi Band -->
                 <div class="absolute bottom-0 left-0 w-full bg-[#131313]/90 text-[#e9c400] p-3 pt-6 font-label-bold text-[11px] uppercase tracking-wider text-center" 
                      style="clip-path: polygon(0 25%, 100% 0, 100% 100%, 0% 100%);">
-                    ${generos.split(',')[0]} • ${manga.volumes?.length || 0} TOMOS
+                    ${primaryGenre} • ${manga.volumes?.length || 0} TOMOS
                 </div>
 
                 <div class="overlay absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex flex-col justify-end p-6 pb-20 translate-y-12 group-hover:translate-y-0 transition-transform duration-300">

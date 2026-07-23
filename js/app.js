@@ -82,13 +82,14 @@ const App = {
         if (searchButton && searchInput) {
             searchButton.addEventListener('click', async () => {
                 const query = searchInput.value;
-                if (!query) return filterAndSort(currentMangas, null, sortSelect?.value);
+                const activeGenreId = new URLSearchParams(window.location.search).get('genre') ? allGenres.find(g => g.slug === new URLSearchParams(window.location.search).get('genre'))?.id : null;
                 
                 UI.showLoading(grid);
                 try {
                     const results = await MangaService.searchMangas(query);
                     currentMangas = results;
-                    filterAndSort(currentMangas, null, sortSelect?.value);
+                    // Retain genre filter
+                    filterAndSort(currentMangas, activeGenreId, sortSelect?.value);
                 } catch (error) {
                     UI.showError(grid, "Error en la búsqueda.");
                 }
@@ -157,6 +158,18 @@ const App = {
         const saveBtn = document.getElementById('saveMangaBtn');
         const coverInput = document.getElementById('cover-upload');
         const coverName = document.getElementById('coverName');
+        const genreContainer = document.getElementById('genreCheckboxes');
+
+        // Cargar géneros
+        try {
+            const genres = await MangaService.getGenres();
+            genreContainer.innerHTML = genres.map(g => `
+                <label class="flex items-center gap-2 cursor-pointer text-xs font-label-bold uppercase">
+                    <input type="checkbox" name="genres" value="${g.id}" class="accent-primary">
+                    ${g.name}
+                </label>
+            `).join('');
+        } catch(e) { console.error(e); }
 
         if (coverInput) {
             coverInput.addEventListener('change', (e) => {
@@ -178,6 +191,9 @@ const App = {
                     direction: document.getElementById('mangaDirection').value
                 };
 
+                const selectedGenres = Array.from(document.querySelectorAll('input[name="genres"]:checked'))
+                                           .map(cb => cb.value);
+
                 try {
                     if (!coverInput.files || coverInput.files.length === 0) {
                         alert("Por favor selecciona una portada.");
@@ -187,7 +203,7 @@ const App = {
                     const coverPath = await MangaService.uploadFile('covers', coverInput.files[0]);
                     mangaData.cover_path = coverPath;
 
-                    await MangaService.createManga(mangaData);
+                    await MangaService.createManga(mangaData, selectedGenres);
                     alert("Manga creado exitosamente");
                     window.opener.location.reload();
                     window.close();
@@ -207,13 +223,27 @@ const App = {
         const saveBtn = document.getElementById('saveEditMangaBtn');
         const coverInput = document.getElementById('edit-cover-upload');
         const coverName = document.getElementById('editCoverName');
+        const genreContainer = document.getElementById('editGenreCheckboxes');
 
         const urlParams = new URLSearchParams(window.location.search);
         const mangaId = urlParams.get('id');
         if (!mangaId) return window.close();
 
-        // Cargar datos actuales
-        const manga = await MangaService.getMangaById(mangaId);
+        // Cargar géneros y datos actuales
+        const [manga, allGenres] = await Promise.all([
+            MangaService.getMangaById(mangaId),
+            MangaService.getGenres()
+        ]);
+
+        const currentGenreIds = manga.manga_genres.map(g => g.genre_id);
+
+        genreContainer.innerHTML = allGenres.map(g => `
+            <label class="flex items-center gap-2 cursor-pointer text-xs font-label-bold uppercase">
+                <input type="checkbox" name="genres" value="${g.id}" class="accent-primary" ${currentGenreIds.includes(g.id) ? 'checked' : ''}>
+                ${g.name}
+            </label>
+        `).join('');
+
         document.getElementById('mangaId').value = manga.id;
         document.getElementById('editTitle').value = manga.title;
         document.getElementById('editAuthor').value = manga.author;
@@ -236,12 +266,15 @@ const App = {
                 direction: document.getElementById('editDirection').value
             };
 
+            const selectedGenres = Array.from(document.querySelectorAll('input[name="genres"]:checked'))
+                                           .map(cb => cb.value);
+
             try {
                 if (coverInput.files[0]) {
                     mangaData.cover_path = await MangaService.uploadFile('covers', coverInput.files[0]);
                 }
 
-                await MangaService.updateManga(mangaId, mangaData);
+                await MangaService.updateManga(mangaId, mangaData, selectedGenres);
                 alert("Cambios guardados");
                 window.opener.location.reload();
                 window.close();

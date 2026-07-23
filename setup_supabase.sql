@@ -132,8 +132,9 @@ stable
 as $$
   select *
   from public.mangas
-  where search_vector @@ websearch_to_tsquery('spanish', unaccent(query))
-  order by ts_rank(search_vector, websearch_to_tsquery('spanish', unaccent(query))) desc;
+  where title ILIKE '%' || query || '%'
+     or author ILIKE '%' || query || '%'
+     or synopsis ILIKE '%' || query || '%';
 $$;
 
 -- ============================================================
