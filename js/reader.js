@@ -35,21 +35,33 @@ const Reader = {
      * @param {string} volumeId 
      */
     async init(pdfUrl, container, volumeId) {
-        if (typeof pdfjsLib === 'undefined' || typeof StPageFlip === 'undefined') {
-            console.error("Librerías necesarias no cargadas");
+        // Log keys to debug library export name
+        console.log("Checking for PageFlip library...");
+        const St = window.St;
+        const pageFlipClass = St ? St.PageFlip : window.PageFlip;
+        
+        console.log("window.St:", !!St);
+        console.log("pageFlipClass detected:", !!pageFlipClass);
+
+        // Verificar disponibilidad global de las librerías
+        const pdfjs = window.pdfjsLib;
+
+        if (!pdfjs || !pageFlipClass) {
+            console.error("Librerías necesarias no cargadas. pdfjs:", !!pdfjs, "PageFlip:", !!pageFlipClass);
+            alert("Error: No se pudieron cargar las librerías del lector. Por favor, recarga la página.");
             return;
         }
 
-        // Configurar StPageFlip
-        this.pageFlip = new StPageFlip(container, {
+        // Configurar StPageFlip usando la referencia correcta
+        this.pageFlip = new pageFlipClass(container, {
             width: 400,
             height: 600,
             showCover: true,
             mobileScrollSupport: true
         });
 
-        // Cargar documento
-        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        // Cargar documento usando pdfjs referencia
+        const loadingTask = pdfjs.getDocument(pdfUrl);
         const pdf = await loadingTask.promise;
         const totalPages = pdf.numPages;
 
