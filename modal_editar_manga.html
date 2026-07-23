@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>MangaReadV1 - Agregar Manga</title>
+    <title>MangaReadV1 - Editar Manga</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=Space+Grotesk:wght@700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     <style>
@@ -16,55 +16,55 @@
 
     <main class="max-w-[800px] mx-auto glass-panel p-8 rounded-lg border-2 border-primary/20 shadow-2xl">
         <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
-            <h2 class="font-headline-md text-headline-md text-primary uppercase">Agregar Manga</h2>
+            <h2 class="font-headline-md text-headline-md text-primary uppercase">Editar Manga</h2>
             <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="window.close()">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
 
-        <form id="mangaForm" class="flex flex-col gap-6">
+        <form id="editMangaForm" class="flex flex-col gap-6">
+            <input type="hidden" id="mangaId">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="flex flex-col gap-2">
                     <label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest text-xs">Título del Manga</label>
-                    <input id="mangaTitle" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors" placeholder="Ej: Chainsaw Man" type="text" required>
+                    <input id="editTitle" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors" type="text" required>
                 </div>
                 <div class="flex flex-col gap-2">
                     <label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest text-xs">Autor</label>
-                    <input id="mangaAuthor" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors" placeholder="Ej: Tatsuki Fujimoto" type="text" required>
+                    <input id="editAuthor" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors" type="text" required>
                 </div>
             </div>
             
             <div class="flex flex-col gap-2">
                 <label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest text-xs">Sinopsis</label>
-                <textarea id="mangaSynopsis" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors resize-none" placeholder="Escribe un breve resumen..." rows="4" required></textarea>
+                <textarea id="editSynopsis" class="bg-white/5 border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface transition-colors resize-none" rows="4" required></textarea>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="flex flex-col gap-2">
                     <label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest text-xs">Sentido de Lectura</label>
-                    <select id="mangaDirection" class="bg-surface-container-high border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface">
+                    <select id="editDirection" class="bg-surface-container-high border-b-2 border-primary focus:border-tertiary outline-none p-3 font-body-md text-on-surface">
                         <option value="rtl">Derecha a Izquierda - RTL</option>
                         <option value="ltr">Izquierda a Derecha - LTR</option>
                     </select>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest text-xs">Subir Portada</label>
-                    <input class="hidden" id="cover-upload" type="file" accept="image/*" required>
-                    <label class="flex items-center gap-3 bg-surface-container-high border-2 border-dashed border-primary/40 p-3 cursor-pointer hover:border-primary transition-all" for="cover-upload">
+                    <label class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest text-xs">Cambiar Portada (Opcional)</label>
+                    <input class="hidden" id="edit-cover-upload" type="file" accept="image/*">
+                    <label class="flex items-center gap-3 bg-surface-container-high border-2 border-dashed border-primary/40 p-3 cursor-pointer hover:border-primary transition-all" for="edit-cover-upload">
                         <span class="material-symbols-outlined text-primary">upload_file</span>
-                        <span id="coverName" class="font-body-md text-sm text-on-surface-variant">Seleccionar archivo...</span>
+                        <span id="editCoverName" class="font-body-md text-sm text-on-surface-variant">Mantener actual...</span>
                     </label>
                 </div>
             </div>
 
             <div class="flex justify-end gap-4 mt-8 pt-6 border-t border-white/10">
                 <button type="button" class="px-6 py-3 border-2 border-white/10 text-on-surface font-label-bold uppercase hover:bg-white/5 transition-all" onclick="window.close()">Cancelar</button>
-                <button id="saveMangaBtn" type="button" class="px-8 py-3 bg-primary text-on-primary font-headline-md text-xl uppercase kinetic-border hover:bg-tertiary hover:text-on-tertiary transition-all">Guardar Manga</button>
+                <button id="saveEditMangaBtn" type="button" class="px-8 py-3 bg-primary text-on-primary font-headline-md text-xl uppercase kinetic-border hover:bg-tertiary hover:text-on-tertiary transition-all">Guardar Cambios</button>
             </div>
         </form>
     </main>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>

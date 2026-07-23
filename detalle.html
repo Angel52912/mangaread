@@ -4,6 +4,7 @@
 <title>Chainsaw Man - MangaReadV1</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&amp;family=Anton&amp;family=Space+Grotesk:wght@400;700&amp;family=Hanken+Grotesk:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -127,22 +128,19 @@
 <div class="fixed right-0 top-0 w-[20%] h-full hidden xl:block manga-grid-bg z-0" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuD3LPok9PQZbbis5RS5L6JeQDQu3Y7t95UndKA8k5iNu5-tWoVSaidPR7heTcPPxipgIdCs6cGbsFXfadpK_cJZCpkH42saPl5vxX42higHTCSTLZiWhH1sqrxdFuk5Z4HuXdD8ayNcf46IgsEm9KWWZsAih4Qy2b1U5TBWFteP42e1B4p6vCDt-XCy8giLrx4qWQ8UvlzsYdG6RkWnY6I-A4FNhcADA35y6ZPRvIzkechvNPtiqrX00oUVggrt3Ec4Pht4r5AbmmA&quot;); background-size: cover; background-position: center center;"></div>
 <!-- Top Navigation (Shared Component Logic) -->
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter py-4 max-w-[1200px] mx-auto left-0 right-0 bg-surface/80 backdrop-blur-md border-b-2 border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-<div class="font-headline-md text-headline-md text-primary uppercase italic">MangaReadV1</div>
+<div class="font-headline-md text-headline-md text-primary uppercase italic cursor-pointer" onclick="window.location.href='index.html'">MangaReadV1</div>
 <nav class="hidden md:flex gap-gutter">
-<a class="text-on-surface-variant font-label-bold hover:text-primary transition-colors" href="#">Library</a>
-<a class="text-on-surface-variant font-label-bold hover:text-primary transition-colors" href="#">New</a>
-<a class="text-on-surface-variant font-label-bold hover:text-primary transition-colors" href="#">Hot</a>
-<a class="text-on-surface-variant font-label-bold hover:text-primary transition-colors" href="#">Categories</a>
+<a class="text-on-surface-variant font-label-bold hover:text-primary transition-colors" href="index.html">Library</a>
 </nav>
 <div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">account_circle</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform" onclick="window.location.href='admin_login_1.html'">account_circle</span>
 </div>
 </header>
 <!-- Main Content Canvas -->
 <main class="relative z-10 max-w-[1200px] mx-auto min-h-screen pt-24 pb-margin-safe px-gutter sm:px-margin-safe lg:px-asymmetric-offset">
 <div class="surface_glass p-gutter md:p-margin-safe rounded-none border-primary border-t-4 shadow-xl">
 <!-- Back Button -->
-<button class="flex items-center gap-2 group mb-8 transition-transform active:translate-x-[-4px]">
+<button class="flex items-center gap-2 group mb-8 transition-transform active:translate-x-[-4px]" onclick="window.location.href='index.html'">
 <span class="material-symbols-outlined text-primary group-hover:scale-125 transition-transform">arrow_back</span>
 <span class="font-label-bold text-label-bold text-primary uppercase tracking-widest">Volver a la Biblioteca</span>
 </button>
@@ -160,6 +158,8 @@
 <div id="mangaDirection" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-3 py-1 font-label-bold text-[12px] uppercase">
 </div>
 </div>
+<!-- Genres -->
+<div id="mangaGenres" class="flex flex-wrap gap-2 mb-6"></div>
 <div id="mangaSynopsis" class="space-y-4 max-w-prose text-body-lg font-body-lg text-on-surface text-justify leading-relaxed">
 </div>
 </div>

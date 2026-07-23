@@ -92,13 +92,11 @@
 
 <!-- TopNavBar Cluster -->
 <nav class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface/80 backdrop-blur-md border-b border-white/10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-<div class="font-headline-md text-headline-md text-primary uppercase tracking-tighter">
+<div class="font-headline-md text-headline-md text-primary uppercase tracking-tighter cursor-pointer" onclick="window.location.href='index.html'">
             MangaReadV1
         </div>
 <div class="hidden md:flex gap-8 items-center">
-<a href="#" class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md">Dashboard</a>
-
-
+<a href="admin.html" class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md">Dashboard</a>
 </div>
 <button id="logoutBtn" class="bg-secondary-container text-on-secondary-container px-4 py-2 font-label-bold text-label-bold flex items-center gap-2 kinetic-border hover:bg-error transition-all active:translate-y-1">
 <span class="material-symbols-outlined text-sm">logout</span>
@@ -112,15 +110,14 @@
 <p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Control Terminal</p>
 </div>
 <nav class="flex flex-col gap-2">
-<a href="#" class="flex items-center gap-3 bg-primary text-on-primary p-4 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-label-bold text-label-bold">
+<a href="admin.html" class="flex items-center gap-3 bg-primary text-on-primary p-4 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-label-bold text-label-bold">
 <span class="material-symbols-outlined">library_books</span>
                 Library
             </a>
 
-
-<a href="#" class="flex items-center gap-3 text-on-surface-variant p-4 hover:bg-surface-variant transition-transform hover:translate-x-1 font-label-bold text-label-bold">
-<span class="material-symbols-outlined">settings</span>
-                Settings
+<a href="admin_genres.html" class="flex items-center gap-3 text-on-surface-variant p-4 hover:bg-surface-variant transition-transform hover:translate-x-1 font-label-bold text-label-bold">
+<span class="material-symbols-outlined">category</span>
+                Géneros
             </a>
 </nav>
 <div class="mt-auto px-4">

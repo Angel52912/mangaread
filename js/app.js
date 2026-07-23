@@ -23,6 +23,7 @@ const App = {
         const sortSelect = document.getElementById('sortSelect'); 
         
         let currentMangas = [];
+        let allGenres = [];
 
         const filterAndSort = (mangas, genreId = null, sortBy = 'recientes') => {
             let filtered = mangas;
@@ -35,31 +36,47 @@ const App = {
                 filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
             }
             UI.renderMangaGrid(grid, filtered);
+            
+            // UI update for active chip
+            document.querySelectorAll('.hanko-chip').forEach(el => el.classList.remove('hanko-chip-active', 'bg-[#C63D2F]', 'text-[#fff6f5]'));
+            if (genreId) {
+                const activeChip = Array.from(document.querySelectorAll('.hanko-chip')).find(el => el.getAttribute('onclick')?.includes(genreId));
+                activeChip?.classList.add('hanko-chip-active', 'bg-[#C63D2F]', 'text-[#fff6f5]');
+            } else {
+                document.querySelector('[onclick="filterByGenre(null)"]')?.classList.add('hanko-chip-active', 'bg-[#C63D2F]', 'text-[#fff6f5]');
+            }
         };
 
-        if (grid) {
-            UI.showLoading(grid);
-            try {
-                currentMangas = await MangaService.getMangas();
-                filterAndSort(currentMangas);
-            } catch (error) {
-                UI.showError(grid, "Error al cargar los mangas.");
+        const urlParams = new URLSearchParams(window.location.search);
+        const genreSlug = urlParams.get('genre');
+
+        if (grid) UI.showLoading(grid);
+
+        try {
+            // Load all necessary data
+            [currentMangas, allGenres] = await Promise.all([
+                MangaService.getMangas(),
+                MangaService.getGenres()
+            ]);
+
+            // Handle initial filter
+            let initialGenreId = null;
+            if (genreSlug) {
+                const genre = allGenres.find(g => g.slug === genreSlug);
+                if (genre) initialGenreId = genre.id;
             }
-        }
-        
-        if (genreFilters) {
-            try {
-                const genres = await MangaService.getGenres();
-                UI.renderGenreFilters(genreFilters, genres);
-                
-                window.filterByGenre = (genreId) => {
-                    document.querySelectorAll('.hanko-chip').forEach(el => el.classList.remove('hanko-chip-active'));
-                    event.currentTarget.classList.add('hanko-chip-active');
-                    filterAndSort(currentMangas, genreId, sortSelect?.value);
-                };
-            } catch (error) {
-                console.error("Error al cargar géneros:", error);
-            }
+
+            // Render
+            if (genreFilters) UI.renderGenreFilters(genreFilters, allGenres);
+            filterAndSort(currentMangas, initialGenreId, sortSelect?.value);
+            
+            window.filterByGenre = (genreId) => {
+                filterAndSort(currentMangas, genreId, sortSelect?.value);
+            };
+
+        } catch (error) {
+            console.error(error);
+            if (grid) UI.showError(grid, "Error al cargar la biblioteca.");
         }
 
         if (searchButton && searchInput) {
@@ -162,18 +179,76 @@ const App = {
                 };
 
                 try {
+                    if (!coverInput.files || coverInput.files.length === 0) {
+                        alert("Por favor selecciona una portada.");
+                        return;
+                    }
+
                     const coverPath = await MangaService.uploadFile('covers', coverInput.files[0]);
                     mangaData.cover_path = coverPath;
 
                     await MangaService.createManga(mangaData);
                     alert("Manga creado exitosamente");
-                    window.location.reload();
+                    window.opener.location.reload();
+                    window.close();
                 } catch (error) {
                     console.error(error);
                     alert("Error al guardar el manga: " + error.message);
                 }
             });
         }
+    },
+
+    /**
+     * Lógica para modal_editar_manga.html
+     */
+    async initEditMangaModal() {
+        const form = document.getElementById('editMangaForm');
+        const saveBtn = document.getElementById('saveEditMangaBtn');
+        const coverInput = document.getElementById('edit-cover-upload');
+        const coverName = document.getElementById('editCoverName');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const mangaId = urlParams.get('id');
+        if (!mangaId) return window.close();
+
+        // Cargar datos actuales
+        const manga = await MangaService.getMangaById(mangaId);
+        document.getElementById('mangaId').value = manga.id;
+        document.getElementById('editTitle').value = manga.title;
+        document.getElementById('editAuthor').value = manga.author;
+        document.getElementById('editSynopsis').value = manga.synopsis;
+        document.getElementById('editDirection').value = manga.direction;
+
+        if (coverInput) {
+            coverInput.addEventListener('change', (e) => {
+                coverName.innerText = e.target.files[0]?.name || "Mantener actual...";
+            });
+        }
+
+        saveBtn.addEventListener('click', async () => {
+            if (!form.checkValidity()) return form.reportValidity();
+
+            const mangaData = {
+                title: document.getElementById('editTitle').value,
+                author: document.getElementById('editAuthor').value,
+                synopsis: document.getElementById('editSynopsis').value,
+                direction: document.getElementById('editDirection').value
+            };
+
+            try {
+                if (coverInput.files[0]) {
+                    mangaData.cover_path = await MangaService.uploadFile('covers', coverInput.files[0]);
+                }
+
+                await MangaService.updateManga(mangaId, mangaData);
+                alert("Cambios guardados");
+                window.opener.location.reload();
+                window.close();
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        });
     },
 
     /**
@@ -186,6 +261,12 @@ const App = {
         const marksContainer = document.getElementById('chapterMarksContainer');
         const pdfInput = document.getElementById('pdf-upload');
         const pdfName = document.getElementById('pdfName');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const mangaIdFromUrl = urlParams.get('mangaId');
+        if (mangaIdFromUrl && document.getElementById('mangaId')) {
+            document.getElementById('mangaId').value = mangaIdFromUrl;
+        }
 
         if (pdfInput) {
             pdfInput.addEventListener('change', (e) => {
@@ -240,12 +321,140 @@ const App = {
 
                 await MangaService.createVolume(volumeData, chapterMarks);
                 alert("Tomo creado exitosamente");
-                window.location.reload();
+                window.opener.location.reload();
+                window.close();
             } catch (error) {
                 console.error(error);
                 alert("Error al guardar el tomo: " + error.message);
             }
         });
+    },
+
+    /**
+     * Lógica para modal_editar_tomo.html
+     */
+    async initEditVolumeModal() {
+        const form = document.getElementById('editVolumeForm');
+        const saveBtn = document.getElementById('saveEditVolumeBtn');
+        const addMarkBtn = document.getElementById('addMarkBtn');
+        const marksContainer = document.getElementById('chapterMarksContainer');
+        const pdfInput = document.getElementById('edit-pdf-upload');
+        const pdfName = document.getElementById('editPdfName');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const volumeId = urlParams.get('id');
+        if (!volumeId) return window.close();
+
+        // Cargar datos actuales
+        const { data: volume, error } = await supabaseClient
+            .from('volumes')
+            .select('*, chapter_marks(*)')
+            .eq('id', volumeId)
+            .single();
+
+        if (error) { alert("Error cargando tomo"); return window.close(); }
+
+        document.getElementById('volumeId').value = volume.id;
+        document.getElementById('editVolumeTitle').value = volume.title;
+        document.getElementById('editVolumeChaptersLabel').value = volume.chapters_label;
+
+        // Cargar marcas existentes
+        function addMarkRow(chapter = '', page = '') {
+            const row = document.createElement('div');
+            row.className = 'flex items-center gap-4 bg-surface-container-low p-3 border border-white/5 mark-row';
+            row.innerHTML = `
+                <div class="flex-1 grid grid-cols-2 gap-4">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-primary font-label-bold">CAP</span>
+                        <input class="mark-cap w-full bg-white/5 border-b border-primary/40 py-1 px-2 text-on-surface font-label-bold" type="number" value="${chapter}" required/>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-primary font-label-bold">PÁG</span>
+                        <input class="mark-page w-full bg-white/5 border-b border-primary/40 py-1 px-2 text-on-surface font-label-bold" type="number" value="${page}" required/>
+                    </div>
+                </div>
+                <button type="button" class="text-on-surface-variant hover:text-error transition-colors delete-mark-btn">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            `;
+            row.querySelector('.delete-mark-btn').addEventListener('click', () => row.remove());
+            marksContainer.appendChild(row);
+        }
+
+        volume.chapter_marks.forEach(mark => addMarkRow(mark.chapter, mark.page));
+        addMarkBtn.addEventListener('click', () => addMarkRow());
+
+        if (pdfInput) {
+            pdfInput.addEventListener('change', (e) => {
+                pdfName.innerText = e.target.files[0]?.name || "Mantener archivo actual...";
+            });
+        }
+
+        saveBtn.addEventListener('click', async () => {
+            if (!form.checkValidity()) return form.reportValidity();
+
+            const volumeData = {
+                title: document.getElementById('editVolumeTitle').value,
+                chapters_label: document.getElementById('editVolumeChaptersLabel').value
+            };
+
+            const chapterMarks = Array.from(document.querySelectorAll('.mark-row')).map(row => ({
+                chapter: parseInt(row.querySelector('.mark-cap').value),
+                page: parseInt(row.querySelector('.mark-page').value)
+            }));
+
+            try {
+                if (pdfInput.files[0]) {
+                    volumeData.pdf_path = await MangaService.uploadFile('pdfs', pdfInput.files[0]);
+                    volumeData.pdf_name = pdfInput.files[0].name;
+                }
+
+                await MangaService.updateVolume(volumeId, volumeData, chapterMarks);
+                alert("Tomo actualizado exitosamente");
+                window.opener.location.reload();
+                window.close();
+            } catch (error) {
+                console.error(error);
+                alert("Error al guardar: " + error.message);
+            }
+        });
+    },
+
+    /**
+     * Lógica para admin_genres.html
+     */
+    async initGenreManagement() {
+        const form = document.getElementById('genreForm');
+        const list = document.getElementById('genresList');
+
+        const loadGenres = async () => {
+            const genres = await MangaService.getGenres();
+            list.innerHTML = genres.map(g => `
+                <div class="hanko-chip flex items-center justify-between gap-2">
+                    ${g.name}
+                    <button onclick="App.deleteGenre('${g.id}')" class="text-error hover:text-white">
+                        <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+                </div>
+            `).join('');
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('genreName').value;
+            await MangaService.addGenre(name);
+            document.getElementById('genreName').value = '';
+            loadGenres();
+        });
+
+        App.deleteGenre = async (id) => {
+            if(confirm('¿Seguro?')) {
+                await MangaService.deleteGenre(id);
+                loadGenres();
+            }
+        };
+
+        loadGenres();
     },
 
     /**
@@ -288,13 +497,25 @@ const App = {
                         <td class="py-4 px-2 text-on-surface-variant">${manga.author}</td>
                         <td class="py-4 px-2 text-right">
                             <div class="flex justify-end gap-2">
-                                <button class="p-2 hover:bg-primary-container text-primary transition-colors"><span class="material-symbols-outlined text-base">edit</span></button>
+                                <button class="p-2 hover:bg-primary-container text-primary transition-colors edit-manga-btn" data-id="${manga.id}" title="Editar"><span class="material-symbols-outlined text-base">edit</span></button>
+                                <button class="p-2 hover:bg-primary-container text-primary transition-colors add-volume-btn" data-id="${manga.id}" title="Agregar Tomo"><span class="material-symbols-outlined text-base">library_add</span></button>
                                 <button class="p-2 hover:bg-error-container text-error transition-colors delete-manga-btn" data-id="${manga.id}"><span class="material-symbols-outlined text-base">delete</span></button>
                             </div>
                         </td>
                     </tr>
                 `).join('');
 
+                // Conectar eventos
+                document.querySelectorAll('.edit-manga-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        window.open(`modal_editar_manga.html?id=${btn.dataset.id}`, '_blank', 'width=800,height=600');
+                    });
+                });
+                document.querySelectorAll('.add-volume-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        window.open(`modal_agregar_tomo.html?mangaId=${btn.dataset.id}`, '_blank', 'width=800,height=600');
+                    });
+                });
                 document.querySelectorAll('.delete-manga-btn').forEach(btn => {
                     btn.addEventListener('click', async () => {
                         if (confirm('¿Estás seguro de eliminar este manga?')) {
@@ -329,8 +550,18 @@ const App = {
             document.getElementById('mangaTitle').innerText = manga.title;
             document.getElementById('mangaAuthor').innerText = manga.author;
             document.getElementById('mangaSynopsis').innerText = manga.synopsis;
-            document.getElementById('mangaDirection').innerText = `Sentido de lectura: ${manga.direction.toUpperCase()}`;
+            document.getElementById('mangaDirection').innerText = manga.direction.toUpperCase();
             document.getElementById('mangaCover').src = MangaService.getFileUrl('covers', manga.cover_path);
+            
+            // Render Genres
+            const genresContainer = document.getElementById('mangaGenres');
+            if (genresContainer && manga.manga_genres) {
+                genresContainer.innerHTML = manga.manga_genres.map(g => `
+                    <a href="index.html?genre=${g.genres.slug}" class="font-label-bold text-label-bold text-primary border border-primary px-3 py-1 uppercase text-[12px] hanko-chip no-underline">
+                        ${g.genres.name}
+                    </a>
+                `).join('');
+            }
             
             const volumesGrid = document.getElementById('volumesGrid');
             volumesGrid.innerHTML = manga.volumes.map(vol => `
@@ -365,8 +596,38 @@ const App = {
         if (!volumeId || !bookContainer) return;
 
         try {
-            const pdfUrl = MangaService.getFileUrl('pdfs', `volumes/${volumeId}.pdf`); 
+            const { data: volume, error: vError } = await supabaseClient
+                .from('volumes')
+                .select('*, mangas(title), chapter_marks(*)')
+                .eq('id', volumeId)
+                .single();
+
+            if (vError) throw vError;
+
+            document.getElementById('readerMangaTitle').innerText = volume.mangas.title;
+            document.getElementById('readerVolumeTitle').innerText = volume.title;
+
+            const chaptersList = document.getElementById('chaptersList');
+            if (chaptersList && volume.chapter_marks) {
+                chaptersList.innerHTML = volume.chapter_marks.map(mark => `
+                    <li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer border-l-2 border-transparent hover:border-primary" 
+                        onclick="Reader.pageFlip.flip(${mark.page - 1})">
+                        Capítulo ${mark.chapter} (Pág. ${mark.page})
+                    </li>
+                `).join('');
+            }
+
+            const pdfUrl = MangaService.getFileUrl('pdfs', volume.pdf_path); 
             await Reader.init(pdfUrl, bookContainer, volumeId);
+
+            document.getElementById('prevBtn')?.addEventListener('click', () => Reader.pageFlip.flipPrev());
+            document.getElementById('nextBtn')?.addEventListener('click', () => Reader.pageFlip.flipNext());
+
+            Reader.pageFlip.on('flip', (e) => {
+                document.getElementById('currentPage').innerText = e.data + 1;
+            });
+            document.getElementById('totalPages').innerText = Reader.pageFlip.getPageCount();
+
         } catch (error) {
             console.error("Error al cargar el lector:", error);
         }
@@ -386,8 +647,14 @@ document.addEventListener('DOMContentLoaded', () => {
         App.initAdminRegister();
     } else if (path.includes('modal_agregar_manga.html')) {
         App.initAdminModal();
+    } else if (path.includes('modal_editar_manga.html')) {
+        App.initEditMangaModal();
     } else if (path.includes('modal_agregar_tomo.html')) {
         App.initVolumeModal();
+    } else if (path.includes('modal_editar_tomo.html')) {
+        App.initEditVolumeModal();
+    } else if (path.includes('admin_genres.html')) {
+        App.initGenreManagement();
     } else if (path.includes('admin.html')) {
         App.initAdminDashboard();
     } else if (path.includes('detalle.html')) {

@@ -18,7 +18,7 @@ language sql
 stable
 as $$
   select lower(coalesce(auth.jwt() ->> 'email', '')) in (
-    'correo-administrador@ejemplo.com'
+    'terreneitor1342@gmail.com'
   );
 $$;
 

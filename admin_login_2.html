@@ -1,80 +1,157 @@
-<!DOCTYPE html>
-<html lang="es" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MangaReadV1 - Admin Portal</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=Space+Grotesk:wght@700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
-    <style>
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .asymmetric-border { clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 95% 100%, 0% 100%); }
-        .glass-panel { background: rgba(19, 19, 19, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .shonen-glow:hover { box-shadow: 0 0 20px rgba(255, 87, 26, 0.3); }
-        .collage-bg { background-blend-mode: multiply; background-color: #131313; }
-        .tab-active { color: #ffb59e; border-bottom: 3px solid #ffb59e; }
-    </style>
-</head>
-<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden">
+<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:wght@400;700&amp;family=Space+Grotesk:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-fixed-dim": "#e9c400",
+                        "secondary-fixed-dim": "#ffb4a8",
+                        "secondary-container": "#e60000",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#3a0b00",
+                        "primary-fixed": "#ffdbd0",
+                        "on-primary-fixed-variant": "#852400",
+                        "on-surface-variant": "#e6beb2",
+                        "primary-fixed-dim": "#ffb59e",
+                        "secondary-fixed": "#ffdad4",
+                        "on-background": "#e5e2e1",
+                        "surface-variant": "#353534",
+                        "on-tertiary-fixed-variant": "#544600",
+                        "tertiary": "#e9c400",
+                        "background": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-container": "#fff6f5",
+                        "primary": "#ffb59e",
+                        "surface-container": "#201f1f",
+                        "outline-variant": "#5c4037",
+                        "on-tertiary-container": "#4c3e00",
+                        "primary-container": "#ff571a",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#221b00",
+                        "on-secondary-fixed-variant": "#930100",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e2e1",
+                        "outline": "#ad897e",
+                        "surface-tint": "#ffb59e",
+                        "tertiary-container": "#c9a900",
+                        "on-primary": "#5e1700",
+                        "on-secondary-fixed": "#410000",
+                        "surface-bright": "#3a3939",
+                        "on-surface": "#e5e2e1",
+                        "inverse-primary": "#ae3200",
+                        "surface": "#131313",
+                        "secondary": "#ffb4a8",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-container": "#521300",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "on-tertiary": "#3a3000",
+                        "on-secondary": "#690000",
+                        "tertiary-fixed": "#ffe16d",
+                        "surface-dim": "#131313"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "panel-gap": "16px",
+                        "unit": "4px",
+                        "asymmetric-offset": "48px",
+                        "gutter": "24px",
+                        "margin-safe": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Anton"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-bold": ["Space Grotesk"],
+                        "headline-lg": ["Anton"],
+                        "headline-lg-mobile": ["Anton"],
+                        "display-hero": ["Anton"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["36px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                        "display-hero": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden">
+<!-- Background Layers -->
+<div class="fixed inset-0 z-0 flex pointer-events-none">
+<div class="hidden lg:block w-1/3 h-full collage-bg opacity-40 grayscale hover:grayscale-0 transition-all duration-1000" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDkM6qOiAYPKGNP5c_28WjQW22MXgvWNliiiTSEv4qvpgIBX5r9pqRBEGZzBBImUYw8LFZ3jKRBA7fuJsvYBgsxnsy8_0yIFrlycHCv1dprtAQb_4ClcFIsCMTmD_xCvattLhYoN9XJ1bbmIOCMZzV8W2Sldkmj0qMJGWziCwuN0opHMU1bDJMwx0cTwuxC1Jt6WNiGiX9YheaD1Zj8sBTZdp4XNYFBWYYYCnYYylX1ViRmDQmzxNJJ4_olR5xJX33S4pZDAuHDdBg&quot;); background-size: cover; background-position: center center;"></div>
+<div class="w-full lg:w-1/3 h-full bg-background relative">
 
-    <!-- Background Layers -->
-    <div class="fixed inset-0 z-0 flex pointer-events-none">
-        <div class="hidden lg:block w-1/3 h-full collage-bg opacity-40 grayscale hover:grayscale-0 transition-all duration-1000" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDkM6qOiAYPKGNP5c_28WjQW22MXgvWNliiiTSEv4qvpgIBX5r9pqRBEGZzBBImUYw8LFZ3jKRBA7fuJsvYBgsxnsy8_0yIFrlycHCv1dprtAQb_4ClcFIsCMTmD_xCvattLhYoN9XJ1bbmIOCMZzV8W2Sldkmj0qMJGWziCwuN0opHMU1bDJMwx0cTwuxC1Jt6WNiGiX9YheaD1Zj8sBTZdp4XNYFBWYYYCnYYylX1ViRmDQmzxNJJ4_olR5xJX33S4pZDAuHDdBg'); background-size: cover; background-position: center center;"></div>
-        <div class="w-full lg:w-1/3 h-full bg-background relative"></div>
-        <div class="hidden lg:block w-1/3 h-full collage-bg opacity-40 grayscale hover:grayscale-0 transition-all duration-1000" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWgX_9w3gxyKr2CkuZ2U0ymjrDNm7dX4NDH_b6FIO60c7rewP5oWAheR-Cj2lj_5IVJfkUT7KmRZdEjm69QcgsiQ2_-eIfVccMw9_lv9axLlIqqtoeIamz5hLY4Ytrr417OQfBa0ObK_pSywlW0Lw9Xpb-_hPn3NMuSZ8K7Zk5h5WghLllOCaohRfXbT6qmIVq51fXqOpCx6saLHWF873M8WlrJp1n-dpjqCN-54wvHi6fP_ZT6IXmxZTAtNi21mJ0oGB9b0on8Vo'); background-size: cover; background-position: center center;"></div>
-    </div>
+</div>
+<div class="hidden lg:block w-1/3 h-full collage-bg opacity-40 grayscale hover:grayscale-0 transition-all duration-1000" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDWgX_9w3gxyKr2CkuZ2U0ymjrDNm7dX4NDH_b6FIO60c7rewP5oWAheR-Cj2lj_5IVJfkUT7KmRZdEjm69QcgsiQ2_-eIfVccMw9_lv9axLlIqqtoeIamz5hLY4Ytrr417OQfBa0ObK_pSywlW0Lw9Xpb-_hPn3NMuSZ8K7Zk5h5WghLllOCaohRfXbT6qmIVq51fXqOpCx6saLHWF873M8WlrJp1n-dpjqCN-54wvHi6fP_ZT6IXmxZTAtNi21mJ0oGB9b0on8Vo&quot;); background-size: cover; background-position: center center;"></div>
+</div>
+<!-- Top Bar Placeholder for Brand Identity -->
+<header class="relative z-10 w-full px-margin-safe h-16 flex items-center justify-between bg-background/40 backdrop-blur-sm border-b border-white/5">
+<div class="font-headline-md text-headline-md text-primary tracking-tighter">MangaReadV1</div>
 
-    <header class="relative z-10 w-full px-margin-safe h-16 flex items-center justify-between bg-background/40 backdrop-blur-sm border-b border-white/5">
-        <div class="font-headline-md text-headline-md text-primary tracking-tighter">MangaReadV1</div>
-    </header>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative z-10 flex-grow flex items-center justify-center p-gutter">
+<!-- Login/Register Card -->
+<div class="w-full glass-panel asymmetric-border p-12 shadow-2xl flex flex-col gap-8 transform transition-transform duration-500 hover:scale-[1.01] max-w-[900px] py-20">
+<!-- Tabs -->
+<div class="flex border-b border-white/10">
+<button class="flex-1 py-4 font-headline-md text-[48px] tracking-tight transition-all tab-active" id="tab-login" onclick="switchTab('login')">
+                    Iniciar Sesión
+                </button>
+<button class="flex-1 py-4 font-headline-md text-[48px] tracking-tight text-on-surface-variant transition-all hover:text-primary" id="tab-register" onclick="switchTab('register')">
+                    Registrarse
+                </button>
+</div>
+<!-- Login Form -->
 
-    <main class="relative z-10 flex-grow flex items-center justify-center p-gutter">
-        <div class="w-full glass-panel asymmetric-border p-12 shadow-2xl flex flex-col gap-8 max-w-[900px] py-20">
-            <!-- Tabs -->
-            <div class="flex border-b border-white/10">
-                <a href="admin_login_1.html" class="flex-1 py-4 font-headline-md text-[48px] tracking-tight text-on-surface-variant transition-all hover:text-primary text-center">Iniciar Sesión</a>
-                <a href="admin_login_2.html" class="flex-1 py-4 font-headline-md text-[48px] tracking-tight transition-all tab-active text-center">Registrarse</a>
-            </div>
+<!-- Registration Form -->
+<div class="space-y-8" data-tab-content="" id="content-register">
+<div class="space-y-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-0 bottom-4 text-primary">mail</span>
+<input class="w-full bg-white/5 border-0 border-b-2 border-primary/30 focus:border-primary focus:ring-0 pl-12 pb-3 pt-6 text-on-surface text-lg placeholder:text-on-surface-variant outline-none" placeholder="Nuevo Email Admin" type="email">
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-0 bottom-4 text-primary">lock</span>
+<input class="w-full bg-white/5 border-0 border-b-2 border-primary/30 focus:border-primary focus:ring-0 pl-12 pb-3 pt-6 text-on-surface text-lg placeholder:text-on-surface-variant outline-none" id="reg-pass" placeholder="Contraseña Segura" type="password">
+<button class="absolute right-0 bottom-4 text-on-surface-variant hover:text-primary" onclick="togglePass('reg-pass', this)">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-0 bottom-4 text-primary">verified_user</span>
+<input class="w-full bg-white/5 border-0 border-b-2 border-primary/30 focus:border-primary focus:ring-0 pl-12 pb-3 pt-6 text-on-surface text-lg placeholder:text-on-surface-variant outline-none" placeholder="Confirmar Contraseña" type="password">
+</div>
 
-            <!-- Registration Form -->
-            <form id="registerForm" class="space-y-8">
-                <div class="space-y-6">
-                    <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-0 bottom-4 text-primary group-focus-within:scale-110 transition-transform">mail</span>
-                        <input id="reg-email" name="email" class="w-full bg-white/5 border-0 border-b-2 border-primary/30 focus:border-primary focus:ring-0 pl-12 pb-3 pt-6 text-on-surface text-lg placeholder:text-on-surface-variant transition-colors outline-none" placeholder="Nuevo Email Admin" type="email" required>
-                    </div>
-                    <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-0 bottom-4 text-primary group-focus-within:scale-110 transition-transform">lock</span>
-                        <input id="reg-pass" name="password" class="w-full bg-white/5 border-0 border-b-2 border-primary/30 focus:border-primary focus:ring-0 pl-12 pb-3 pt-6 text-on-surface text-lg placeholder:text-on-surface-variant transition-colors outline-none" placeholder="Contraseña Segura" type="password" required>
-                        <button type="button" class="absolute right-0 bottom-4 text-on-surface-variant hover:text-primary transition-colors" onclick="togglePass('reg-pass', this)">
-                            <span class="material-symbols-outlined">visibility</span>
-                        </button>
-                    </div>
-                    <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-0 bottom-4 text-primary group-focus-within:scale-110 transition-transform">verified_user</span>
-                        <input id="reg-pass-confirm" name="confirm-password" class="w-full bg-white/5 border-0 border-b-2 border-primary/30 focus:border-primary focus:ring-0 pl-12 pb-3 pt-6 text-on-surface text-lg placeholder:text-on-surface-variant transition-colors outline-none" placeholder="Confirmar Contraseña" type="password" required>
-                    </div>
-                    <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-0 bottom-4 text-primary group-focus-within:scale-110 transition-transform">key</span>
-                        <input id="reg-invite-code" name="invite-code" class="w-full bg-white/5 border-0 border-b-2 border-primary/30 focus:border-primary focus:ring-0 pl-12 pb-3 pt-6 text-on-surface text-lg placeholder:text-on-surface-variant transition-colors outline-none" placeholder="Código de Invitación" type="text" required>
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-tertiary text-on-tertiary font-headline-md text-[40px] py-6 hover:brightness-110 active:scale-95 transition-all shadow-[6px_6px_0px_0px_#000000]">
+</div>
+<button class="w-full bg-tertiary text-on-tertiary font-headline-md text-[40px] py-6 hover:brightness-110 active:scale-95 transition-all shadow-[6px_6px_0px_0px_#000000]">
                     CREAR CUENTA ADMIN
                 </button>
-            </form>
-        </div>
-    </main>
+</div>
+</div>
+</main>
+<!-- Footer Component -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/manga-service.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
+<script class="">
+        function switchTab(tab) {
+            if (tab === 'register') {
+                window.location.href = 'admin_login_2.html';
+            } else {
+                window.location.href = 'admin_login_1.html';
+            }
+        }
 
-    <script>
         function togglePass(id, btn) {
             const input = document.getElementById(id);
             const icon = btn.querySelector('.material-symbols-outlined');
@@ -87,5 +164,4 @@
             }
         }
     </script>
-</body>
-</html>
+</body></html>

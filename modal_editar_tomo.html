@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>MangaReadV1 - Editar Tomo</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=Space+Grotesk:wght@700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(20, 20, 20, 0.9); backdrop-filter: blur(12px); border: 2px solid #93b4e3; }
+        .kinetic-border { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .retro-shadow-sm { box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen p-8">
+    <div class="glass-panel w-full max-w-2xl mx-auto flex flex-col max-h-[90vh]">
+        <div class="p-6 border-b-2 border-primary/20 bg-surface-container flex justify-between items-center">
+            <h2 class="font-headline-md text-headline-md text-primary tracking-tight">EDITAR TOMO</h2>
+            <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="window.close()">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+        </div>
+        
+        <div class="p-6 overflow-y-auto custom-scrollbar flex-grow">
+            <form id="editVolumeForm" class="space-y-8">
+                <input type="hidden" id="volumeId"/>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="font-label-bold text-primary block uppercase text-xs">Título del Tomo</label>
+                        <input id="editVolumeTitle" class="w-full bg-white/5 border-b-2 border-primary/40 p-3 text-on-surface font-body-md" type="text" required/>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-label-bold text-primary block uppercase text-xs">Capítulos Incluidos</label>
+                        <input id="editVolumeChaptersLabel" class="w-full bg-white/5 border-b-2 border-primary/40 p-3 text-on-surface font-body-md" type="text"/>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="font-label-bold text-primary block uppercase text-xs">Cambiar PDF (Opcional)</label>
+                    <input id="edit-pdf-upload" type="file" class="hidden" accept="application/pdf"/>
+                    <label for="edit-pdf-upload" class="cursor-pointer flex items-center gap-4 bg-white/5 p-4 border border-primary/30 hover:border-primary transition-all">
+                        <span class="material-symbols-outlined text-primary">picture_as_pdf</span>
+                        <span id="editPdfName" class="font-label-bold text-on-surface">Mantener archivo actual...</span>
+                    </label>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-end border-b border-white/10 pb-2">
+                        <h3 class="font-label-bold text-primary uppercase text-xs">Marcas de Capítulos</h3>
+                        <button type="button" id="addMarkBtn" class="bg-surface-container-highest border border-primary/30 px-4 py-1 font-label-bold text-xs text-on-surface hover:bg-primary hover:text-on-primary transition-all">
+                            + AÑADIR MARCA
+                        </button>
+                    </div>
+                    <div id="chapterMarksContainer" class="space-y-3"></div>
+                </div>
+            </form>
+        </div>
+
+        <div class="p-6 bg-surface-container flex gap-4 border-t-2 border-primary/20">
+            <button type="button" class="flex-1 py-4 border-2 border-white/10 text-on-surface font-headline-md text-xl uppercase" onclick="window.close()">Cancelar</button>
+            <button type="button" id="saveEditVolumeBtn" class="flex-1 py-4 bg-primary text-on-primary font-headline-md text-xl retro-shadow-sm hover:bg-tertiary transition-all uppercase">Guardar Cambios</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/manga-service.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

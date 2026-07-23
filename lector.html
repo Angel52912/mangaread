@@ -1,4 +1,12 @@
-<!DOCTYPE html><html class="dark" lang="es" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&amp;family=Anton&amp;family=Hanken+Grotesk:wght@400;700&amp;family=Space+Grotesk:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>MangaReadV1 - Lector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Anton&family=Hanken+Grotesk:wght@400;700&family=Space+Grotesk:wght@700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
           theme: {
@@ -86,133 +94,88 @@
             },
           },
         }
-    }catch(_e){}</script><meta charset="utf-8"></head><body class="font-body-md text-body-md h-screen flex flex-col retro-grid bg-surface text-on-surface">
-<!-- Top App Bar -->
-<header class="w-full top-0 sticky bg-surface/80 backdrop-blur-md z-50 border-b border-white/10 flex justify-between items-center px-gutter py-4 bg-surface">
-<div class="flex items-center gap-4">
-<span class="font-headline-md text-headline-md text-primary tracking-tighter uppercase">MangaReadV1</span>
-<div class="h-6 w-px bg-white/10 mx-2"></div>
-<div class="flex flex-col">
-<span class="font-label-bold text-label-bold text-primary uppercase tracking-widest">CHAINSAW MAN</span>
-<span class="text-[10px] text-on-surface-variant uppercase">Capítulo 1: El Perro y la Motosierra</span>
-</div>
-</div>
-<div class="flex items-center gap-6">
-<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">
-<span class="material-symbols-outlined">bookmark</span>
-</button>
-<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">
-
-</button>
-<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</div>
-</header>
-<main class="flex-grow flex overflow-hidden">
-<!-- LEFT COLUMN: Sidebar (20%) -->
-<aside class="w-1/5 h-full glass-panel border-r border-white/10 flex flex-col p-panel-gap z-40 bg-surface-container-low">
-<button class="mb-8 flex items-center justify-center gap-2 w-full py-3 bg-surface-container hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-bold text-label-bold uppercase border border-primary/20 rounded-lg group bg-surface-container-high">
-<span class="material-symbols-outlined text-sm group-hover:translate-x-[-2px] transition-transform">arrow_back</span>
-                Volver al Detalle
+    </script>
+</head>
+<body class="font-body-md text-body-md h-screen flex flex-col retro-grid bg-surface text-on-surface">
+    <!-- Top App Bar -->
+    <header class="w-full top-0 sticky bg-surface/80 backdrop-blur-md z-50 border-b border-white/10 flex justify-between items-center px-gutter py-4 bg-surface">
+        <div class="flex items-center gap-4 cursor-pointer" onclick="window.location.href='index.html'">
+            <span class="font-headline-md text-headline-md text-primary tracking-tighter uppercase">MangaReadV1</span>
+            <div class="h-6 w-px bg-white/10 mx-2"></div>
+            <div class="flex flex-col">
+                <span id="readerMangaTitle" class="font-label-bold text-label-bold text-primary uppercase tracking-widest">CARGANDO...</span>
+                <span id="readerVolumeTitle" class="text-[10px] text-on-surface-variant uppercase">CARGANDO...</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-6">
+            <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95" onclick="history.back()">
+                <span class="material-symbols-outlined">close</span>
             </button>
-<div class="flex-grow overflow-y-auto custom-scrollbar space-y-8 pr-2">
-<!-- Tomos Section -->
-<div>
-<h3 class="font-label-bold text-label-bold text-primary mb-4 flex items-center gap-2">
-<span class="material-symbols-outlined text-lg">auto_stories</span>
-                        Tomos Disponibles
-                    </h3>
-<ul class="space-y-2">
-<li class="p-3 bg-primary text-on-primary rounded-lg font-label-bold cursor-pointer transition-all flex justify-between items-center">
-<span class="">Tomo 1</span>
-<span class="text-[10px] opacity-70">LECTURA</span>
-</li>
-<li class="p-3 text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg cursor-pointer">Tomo 2</li>
-<li class="p-3 text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg cursor-pointer">Tomo 3</li>
-</ul>
-</div>
-<!-- Capítulos Section -->
-<div>
-<h3 class="font-label-bold text-label-bold text-primary mb-4 flex items-center gap-2">
-<span class="material-symbols-outlined text-lg">format_list_numbered</span>
+        </div>
+    </header>
+
+    <main class="flex-grow flex overflow-hidden">
+        <!-- LEFT COLUMN: Sidebar (20%) -->
+        <aside class="w-1/5 h-full glass-panel border-r border-white/10 flex flex-col p-panel-gap z-40 bg-surface-container-low">
+            <button class="mb-8 flex items-center justify-center gap-2 w-full py-3 bg-surface-container hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-bold text-label-bold uppercase border border-primary/20 rounded-lg group bg-surface-container-high" onclick="history.back()">
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-[-2px] transition-transform">arrow_back</span>
+                Volver
+            </button>
+            <div class="flex-grow overflow-y-auto custom-scrollbar space-y-8 pr-2">
+                <!-- Capítulos Section -->
+                <div>
+                    <h3 class="font-label-bold text-label-bold text-primary mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">format_list_numbered</span>
                         Capítulos
                     </h3>
-<ul class="space-y-1">
-<li class="p-2 text-sm text-primary font-bold border-l-2 border-primary pl-3 bg-primary/5">Capítulo 1: El Perro y la Motosierra</li>
-<li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer">Capítulo 2: La llegada a la ciudad</li>
-<li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer">Capítulo 3: Prueba de reclutamiento</li>
-<li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer">Capítulo 4: El poder de Power</li>
-<li class="p-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30 pl-3 transition-all cursor-pointer">Capítulo 5: El diablo de los tomates</li>
-</ul>
-</div>
-</div>
-<!-- History Link at bottom of sidebar -->
-<div class="pt-4 mt-4 border-t border-white/5">
-<button class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-colors text-sm font-label-bold">
-<span class="material-symbols-outlined">history</span>
-                    ÚLTIMAS LECTURAS
-                </button>
-</div>
-</aside>
-<!-- CENTER COLUMN: Reading Area (65%) -->
-<section class="w-[65%] h-full flex items-center justify-center p-gutter relative bg-surface-dim"><div class="flex flex-col items-center gap-6 w-full max-w-5xl">
-<div id="book" class="w-full aspect-[3/2] page-flip-container relative bg-surface-container-highest shadow-2xl rounded-sm overflow-hidden group" style="transform: rotateY(-12.18deg) rotateX(8.94deg); max-width: 120%; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
-<div class="absolute inset-0 border-[12px] border-surface-container-low pointer-events-none z-30"></div>
-<div class="absolute inset-0 flex">
-<div class="w-1/2 h-full bg-white relative overflow-hidden flex items-center justify-center border-r border-surface-container-low/20"></div>
-<div class="w-1/2 h-full bg-white relative overflow-hidden flex items-center justify-center"></div>
-</div>
-<div class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-24 page-shadow z-20 pointer-events-none"></div>
-<div class="absolute inset-0 pointer-events-none opacity-20 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-</div>
-<div class="flex items-center gap-8">
-<button class="p-3 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-full transition-all active:scale-95 border border-white/5 px-8">
-<span class="material-symbols-outlined text-3xl">chevron_left</span>
-</button>
+                    <ul id="chaptersList" class="space-y-1 text-sm">
+                        <!-- Capítulos will be populated here -->
+                    </ul>
+                </div>
+            </div>
+        </aside>
 
-<button class="p-3 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-full transition-all active:scale-95 border border-white/5 px-8">
-<span class="material-symbols-outlined text-3xl">chevron_right</span>
-</button>
-</div>
-</div></section>
-<!-- RIGHT COLUMN: Decorative (15%) -->
-<aside class="w-[15%] h-full relative flex flex-col justify-end p-margin-safe overflow-hidden bg-surface-dim"><div class="absolute inset-0 z-0 opacity-20 grayscale hover:grayscale-0 transition-all duration-500">
-<img alt="Manga Collage Background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMFOqNUIe_h7ZZCqyDfTvQJjyqp0B5YxOGd6_TTC-I8TFfH5TMLwdE1QTTU-6cwzO1TNiH0O3LBwavJ6hc--w-wLX8ZkNcIbGUwoLJOo2lt6op2cGin_zn_NgsZYfnVfgJLxwo3So7G4dGmeUeCr97uae_5TOUQWlS0iw1Y8qioqZ0QCs359KTJqvsiC-3foojV0VcYL-o39JzxQZy9RNtQ_j0hnWr7XHRW7NqqCwevhmTS72jDjCLAXpg_4OO1wayv99tsZoJvE0">
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60 z-10"></div>
-<div class="relative z-20 flex flex-col h-full justify-end">
-<div class="absolute top-1/2 right-4 -translate-y-1/2 pointer-events-none">
-<p class="rotate-90 text-primary opacity-10 font-headline-lg uppercase whitespace-nowrap tracking-widest text-8xl">SHONEN VAULT</p>
-</div>
-</div></aside>
-</main>
-<!-- Bottom Navigation Bar -->
-<footer class="w-full bottom-0 fixed bg-surface-container-lowest z-40 border-t-2 border-primary shadow-[0_-4px_10px_rgba(0,0,0,0.5)] flex justify-between items-center px-margin-safe py-3">
-<div class="flex items-center gap-4">
-<button class="px-6 py-2 bg-surface-container border border-white/10 hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-bold uppercase text-xs flex items-center gap-2 group">
-<span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">chevron_left</span>
-                Anterior
-            </button>
-<button class="px-6 py-2 bg-surface-container border border-white/10 hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-bold uppercase text-xs flex items-center gap-2 group">
-                Siguiente
-                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">chevron_right</span>
-</button>
-</div>
-<div class="flex items-center gap-3">
-<span class="font-label-bold text-on-surface-variant uppercase text-[10px]">Página</span>
-<div class="relative flex items-center">
-<input class="w-16 bg-surface-container border-0 border-b-2 border-primary text-center font-label-bold text-primary focus:ring-0 text-lg py-1" type="text" value="12">
-</div>
-<span class="font-label-bold text-on-surface-variant uppercase text-[10px]">de 150</span>
-</div>
-<div class="flex items-center gap-2">
+        <!-- CENTER COLUMN: Reading Area (65%) -->
+        <section class="w-[65%] h-full flex items-center justify-center p-gutter relative bg-surface-dim">
+            <div class="flex flex-col items-center gap-6 w-full max-w-5xl">
+                <div id="book" class="w-full aspect-[3/2] page-flip-container relative bg-surface-container-highest shadow-2xl rounded-sm overflow-hidden group">
+                    <!-- StPageFlip content will be injected here -->
+                </div>
+                <div class="flex items-center gap-8">
+                    <button id="prevBtn" class="p-3 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-full transition-all active:scale-95 border border-white/5 px-8">
+                        <span class="material-symbols-outlined text-3xl">chevron_left</span>
+                    </button>
+                    <button id="nextBtn" class="p-3 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-full transition-all active:scale-95 border border-white/5 px-8">
+                        <span class="material-symbols-outlined text-3xl">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-<div class="w-px h-4 bg-white/10 mx-1"></div>
+        <!-- RIGHT COLUMN: Decorative (15%) -->
+        <aside class="w-[15%] h-full relative flex flex-col justify-end p-margin-safe overflow-hidden bg-surface-dim">
+            <div class="absolute inset-0 z-0 opacity-20 grayscale hover:grayscale-0 transition-all duration-500">
+                <img alt="Manga Collage Background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMFOqNUIe_h7ZZCqyDfTvQJjyqp0B5YxOGd6_TTC-I8TFfH5TMLwdE1QTTU-6cwzO1TNiH0O3LBwavJ6hc--w-wLX8ZkNcIbGUwoLJOo2lt6op2cGin_zn_NgsZYfnVfgJLxwo3So7G4dGmeUeCr97uae_5TOUQWlS0iw1Y8qioqZ0QCs359KTJqvsiC-3foojV0VcYL-o39JzxQZy9RNtQ_j0hnWr7XHRW7NqqCwevhmTS72jDjCLAXpg_4OO1wayv99tsZoJvE0">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60 z-10"></div>
+            <div class="relative z-20 flex flex-col h-full justify-end text-right">
+                <p class="rotate-90 text-primary opacity-10 font-headline-lg uppercase whitespace-nowrap tracking-widest text-8xl">SHONEN VAULT</p>
+            </div>
+        </aside>
+    </main>
 
-</div>
-</footer>
-<!-- Dependencias y Módulos -->
+    <!-- Bottom Navigation Bar -->
+    <footer class="w-full bottom-0 fixed bg-surface-container-lowest z-40 border-t-2 border-primary shadow-[0_-4px_10px_rgba(0,0,0,0.5)] flex justify-between items-center px-margin-safe py-3">
+        <div class="flex items-center gap-3">
+            <span class="font-label-bold text-on-surface-variant uppercase text-[10px]">Página</span>
+            <div class="relative flex items-center">
+                <span id="currentPage" class="text-primary font-label-bold text-lg px-2">0</span>
+            </div>
+            <span class="font-label-bold text-on-surface-variant uppercase text-[10px]">de <span id="totalPages">0</span></span>
+        </div>
+    </footer>
+
+    <!-- Dependencias y Módulos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/st.pageflip/2.0.3/js/page-flip.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -225,34 +188,14 @@
     <script src="js/app.js"></script>
 
     <script>
-        // Micro-interaction for page container
         const readerContainer = document.querySelector('.page-flip-container');
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
-            if(readerContainer) readerContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
+        if (readerContainer) {
+            document.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 100;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 100;
+                readerContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+        }
     </script>
-</body></html>
-
-        // Simple zoom toggle simulation
-        let isZoomed = false;
-        const zoomBtn = document.querySelector('[title="Reading Mode"]');
-        zoomBtn.addEventListener('click', () => {
-            isZoomed = !isZoomed;
-            const book = document.querySelector('.page-flip-container');
-            if (isZoomed) {
-                book.style.maxWidth = '120%';
-                book.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                zoomBtn.classList.add('text-primary');
-            } else {
-                book.style.maxWidth = '1024px';
-                zoomBtn.classList.remove('text-primary');
-            }
-        });
-    </script>
-
-
-
-
-</body></html>
+</body>
+</html>

@@ -31,7 +31,7 @@ const MangaService = {
     async getMangaById(id) {
         const { data, error } = await supabaseClient
             .from('mangas')
-            .select('*, manga_genres(genre_id), volumes(*)')
+            .select('*, manga_genres(genres(name, slug)), volumes(*)')
             .eq('id', id)
             .single();
 
@@ -202,12 +202,37 @@ const MangaService = {
         return data;
     },
 
-    async deleteVolume(id) {
+    async updateVolume(id, volumeData, chapterMarks = []) {
+        const payload = {
+            title: volumeData.title,
+            chapters_label: volumeData.chapters_label,
+            normalized_title: normalizeText(volumeData.title)
+        };
+        if (volumeData.pdf_path) payload.pdf_path = volumeData.pdf_path;
+        if (volumeData.pdf_name) {
+            payload.pdf_name = volumeData.pdf_name;
+            payload.normalized_pdf_name = normalizeText(volumeData.pdf_name);
+        }
+
         const { error } = await supabaseClient
             .from('volumes')
-            .delete()
+            .update(payload)
             .eq('id', id);
         if (error) throw error;
+
+        // Actualizar marcas de capítulos
+        await supabaseClient.from('chapter_marks').delete().eq('volume_id', id);
+        if (chapterMarks.length > 0) {
+            const marksPayload = chapterMarks.map(mark => ({
+                volume_id: id,
+                chapter: mark.chapter,
+                page: mark.page
+            }));
+            const { error: mError } = await supabaseClient
+                .from('chapter_marks')
+                .insert(marksPayload);
+            if (mError) throw mError;
+        }
     },
 
     // ============================================================
@@ -221,6 +246,25 @@ const MangaService = {
             .order('name', { ascending: true });
         if (error) throw error;
         return data;
+    },
+
+    async addGenre(name) {
+        const slug = normalizeText(name).replace(/\s+/g, '-');
+        const { data, error } = await supabaseClient
+            .from('genres')
+            .insert({ name, slug })
+            .select()
+            .single();
+        if (error) throw error;
+        return data;
+    },
+
+    async deleteGenre(id) {
+        const { error } = await supabaseClient
+            .from('genres')
+            .delete()
+            .eq('id', id);
+        if (error) throw error;
     },
 
     // ============================================================
